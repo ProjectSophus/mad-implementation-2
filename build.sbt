@@ -18,3 +18,12 @@ lazy val core = (project in file("core"))
         commonSettings,
         name := "MAD-core"
     )
+
+    
+lazy val web = (project in file("web"))
+    .settings(
+        commonSettings,
+        libraryDependencies += guice,
+        name := "MAD-web"
+    ).dependsOn(core).enablePlugins(PlayScala)
+
