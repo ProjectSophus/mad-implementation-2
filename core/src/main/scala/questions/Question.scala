@@ -7,10 +7,10 @@ abstract sealed class Question(override val toString : String, val answer : Answ
 
 object Question {
     def questions(model : Model) : Seq[Question] = {
-        for {
+        (for {
             uid <- model.concepts.keys.toSeq
             machinetype <- MachineType.machineTypes
-        } yield MachineQuestion (uid, model.concepts(uid).name, machinetype)
+        } yield MachineQuestion (uid, model.concepts(uid).name, machinetype)) ++ Seq(NewConceptQuestion)
     }
     
     import Answer._
@@ -22,4 +22,14 @@ object Question {
             "name" -> string
         )
     )
+    
+    case object NewConceptQuestion extends Question (
+        f"Please name a new concept?",
+        Answer(
+            "uid" -> string,
+            "name" -> string
+        )
+    ) {
+        override def hashCode() = 100
+    }
 }
