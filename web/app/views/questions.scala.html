@@ -1,0 +1,12 @@
+@import io.github.ProjectSophus.mad.questions._
+
+@(questions : Seq[Question])
+
+@main("MAD Questions") {
+  <h3>Questions:</h3>
+  <ol>
+      @for(question <- questions) {
+          <a href="/questions/@{question.hashCode()}">@question.toString</a>
+      }
+  </ol>
+}

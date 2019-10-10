@@ -5,12 +5,25 @@ import play.api.mvc._
 import play.twirl.api._
 import akka.stream.scaladsl._
 
+import io.github.ProjectSophus.mad._
+import questions._
+import model._
+
 
 @Singleton
 class MADController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
+    val model = Model()
+
     def index() = Action {
         Ok(views.html.index())
     }
-
+    
+    def questions() = Action {
+        
+        val questions = Question.questions(model)
+        
+        Ok(views.html.questions(questions))
+    }
+    
 }
