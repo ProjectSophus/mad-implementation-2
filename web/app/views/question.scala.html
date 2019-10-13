@@ -4,5 +4,16 @@
 
 @main("MAD Question") {
     <h3>Question:</h3>
-    @question.toString
+    <form action="/answer" method="post">
+        @question.toString <br>
+        @for((label, inputtype) <- question.answer.elements) {
+            @label:
+            @inputtype match {
+                case string => {<input name="@label" type="text">}
+            }
+            <br>
+        }
+        <input name="questionHash" type="text" value="@question.hashCode()" hidden>
+        <input type="submit" value="Submit">
+    </form>
 }
