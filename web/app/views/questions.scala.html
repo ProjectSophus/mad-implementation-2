@@ -6,7 +6,7 @@
   <h3>Questions:</h3>
   <ol>
       @for(question <- questions) {
-          <li><a href="/questions/@{question.hashCode()}">@question.toString</a></li>
+          <li><a href="/questions/@{question.hashCode()}">@question</a></li>
       }
   </ol>
 }
