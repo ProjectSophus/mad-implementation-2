@@ -4,3 +4,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 GET     /questions                  controllers.MADController.questions
 GET     /questions/:hash            controllers.MADController.question(hash)
+POST    /answer                     controllers.MADController.answer
