@@ -36,6 +36,10 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
     }
     
+    def concepts() = Action {
+        Ok(views.html.concepts(model.concepts))
+    }
+    
     def answer() = Action { implicit request =>
         val h = request.body.asFormUrlEncoded.get.apply("questionHash").head.toInt
         

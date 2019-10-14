@@ -1,0 +1,12 @@
+@import io.github.ProjectSophus.mad.model._
+
+@(concepts : Map[String, Concept])
+
+@main("MAD Concepts") {
+  <h3>Concepts:</h3>
+  <ol>
+      @for((uid, concept) <- concepts) {
+          <li><a href="/concepts/@uid">@concept.name</a></li>
+      }
+  </ol>
+}
