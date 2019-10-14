@@ -1,7 +1,8 @@
 package io.github.ProjectSophus.mad.information
 
 import io.github.ProjectSophus.mad._
-import io.github.ProjectSophus.mad.model._
+import model._
+import reference._
 
 object InformationAgent {
     import Information._
@@ -11,6 +12,12 @@ object InformationAgent {
             if (model.concepts contains uid) throw MADException.ConceptUIDTaken(uid)
             if (uid == "" | name == "") throw MADException.ConceptNameOrUIDEmpty
             model.copy(concepts = model.concepts + (uid -> Concept(name, None)))
+        }
+        
+        case NewMachine(uid : String, name : String, domain : ConceptRef, codomain : ConceptRef) => {
+            if (model.machines contains uid) throw MADException.MachineUIDTaken(uid)
+            if (uid == "" | name == "") throw MADException.MachineNameOrUIDEmpty
+            model.copy(machines = model.machines + (uid -> Machine(name, None, domain, codomain)))
         }
     }
 }
