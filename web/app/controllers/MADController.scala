@@ -2,8 +2,6 @@ package controllers
 
 import javax.inject._
 import play.api.mvc._
-import play.twirl.api._
-import akka.stream.scaladsl._
 
 import io.github.ProjectSophus.mad._
 import questions._
