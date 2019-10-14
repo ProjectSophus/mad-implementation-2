@@ -26,7 +26,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.questions(questions))
     }
     
-    def question(hash : String) = Action {
+    def question(hash : String) = Action { implicit request =>
         val h = hash.toInt
         
         val questions = Question.questions(model)

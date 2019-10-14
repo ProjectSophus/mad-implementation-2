@@ -1,11 +1,14 @@
 @import io.github.ProjectSophus.mad.questions._
 @import Answer._
 
-@(question : Question)
+@import helper._
+
+@(question : Question)(implicit request: RequestHeader)
 
 @main("MAD Question") {
     <h3>Question:</h3>
-    <form action="/answer" method="post">
+    @form(routes.MADController.answer()) {
+        @CSRF.formField
         @question.toString <br>
         @for((label, inputtype) <- question.answer.elements) {
             @label:
@@ -16,5 +19,5 @@
         }
         <input name="questionHash" type="text" value="@question.hashCode()" hidden>
         <input type="submit" value="Submit">
-    </form>
+    }
 }
