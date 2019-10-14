@@ -18,16 +18,16 @@ object Question {
     case class MachineQuestion (uid : String, name : String, machinetype : MachineType) extends Question (
         f"Which machines of type $machinetype does $name have?",
         Answer(
-            "Unique ID" -> string,
-            "Name" -> string
+            "Unique ID" -> Text,
+            "Name" -> Text
         )
     )
     
     case object NewConceptQuestion extends Question (
         f"Please name a new concept?",
         Answer(
-            "Unique ID" -> string,
-            "Name" -> string
+            "Unique ID" -> Text,
+            "Name" -> Text
         )
     ) {
         override def hashCode() = 100
