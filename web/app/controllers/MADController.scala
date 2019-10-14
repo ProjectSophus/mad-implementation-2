@@ -4,6 +4,7 @@ import javax.inject._
 import play.api.mvc._
 
 import io.github.ProjectSophus.mad._
+import information._
 import questions._
 import model._
 import interpreter._
@@ -12,7 +13,7 @@ import interpreter._
 @Singleton
 class MADController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-    val model = Model()
+    var model = Model()
 
     def index() = Action {
         Ok(views.html.index())
@@ -52,6 +53,10 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         }) : _*)
         
         val info = Interpreter(q, data)
+        
+        info foreach { information =>
+            model = InformationAgent(information, model)
+        }
         
         Ok(views.html.answer(info))
     }
