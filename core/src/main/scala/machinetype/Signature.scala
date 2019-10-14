@@ -6,7 +6,9 @@ import model._
 
 import Signature._
 
-case class Signature(domain : ConceptPattern, codomain : ConceptPattern)
+case class Signature(domain : ConceptPattern, codomain : ConceptPattern) {
+    def createConceptRefs(t : ConceptRef) : (ConceptRef, ConceptRef) = domain.createConceptRef(t) -> codomain.createConceptRef(t)
+}
 
 object Signature {
     import scala.language.implicitConversions
@@ -14,15 +16,19 @@ object Signature {
     implicit def pairToSignature (pair : (ConceptPattern, ConceptPattern)) : Signature = Signature(pair._1, pair._2)
     
     abstract sealed class ConceptPattern {
+        def createConceptRef (t : ConceptRef) : ConceptRef
+        
         def * (other : ConceptPattern) : ConceptPattern = PatternProduct(this, other)
     }
     
-    case object T extends ConceptPattern
-    case object REPR extends ConceptPattern
-    case object BOOL extends ConceptPattern
-    case object STAR extends ConceptPattern
+    case object T extends ConceptPattern { def createConceptRef(t : ConceptRef) = t }
+    case object REPR extends ConceptPattern { def createConceptRef(t : ConceptRef) = ConceptRef.BasicRef("REPR") }
+    case object BOOL extends ConceptPattern { def createConceptRef(t : ConceptRef) = ConceptRef.BasicRef("BOOL") }
+    case object STAR extends ConceptPattern { def createConceptRef(t : ConceptRef) = ConceptRef.BasicRef("STAR") }
     
-    case class PatternProduct (left : ConceptPattern, right : ConceptPattern) extends ConceptPattern
+    case class PatternProduct (left : ConceptPattern, right : ConceptPattern) extends ConceptPattern {
+        def createConceptRef(t : ConceptRef) = ConceptRef.CartesianProduct(left.createConceptRef(t), right.createConceptRef(t))
+    }
     
     def apply (machine : Machine, signature : Signature, t : ConceptRef) : Boolean = apply(machine.domain, signature.domain, t) & apply(machine.codomain, signature.codomain, t)
     
