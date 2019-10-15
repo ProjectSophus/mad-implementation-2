@@ -19,5 +19,13 @@ object InformationAgent {
             if (uid == "" | name == "") throw MADException.MachineNameOrUIDEmpty
             model.copy(machines = model.machines + (uid -> Machine(name, None, domain, codomain)))
         }
+        
+        case ConceptDescription(uid : String, description : String) => {
+            model.copy(concepts = model.concepts + (uid -> model.concepts(uid).copy(description = Some(description))))
+        }
+        
+        case MachineDescription(uid : String, description : String) => {
+            model.copy(machines = model.machines + (uid -> model.machines(uid).copy(description = Some(description))))
+        }
     }
 }
