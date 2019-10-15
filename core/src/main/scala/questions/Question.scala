@@ -32,4 +32,17 @@ object Question {
     ) {
         override def hashCode() = 100
     }
+    case class ConceptDescriptionQuestion (uid : String, name : String) extends Question (
+        f"What is the description of $name?",
+        Answer(
+            "Description" -> Text
+        )
+    ) { override def hashCode() = (uid, name).hashCode() }
+    
+    case class MachineDescriptionQuestion (uid : String, name : String) extends Question (
+        f"What is the description of $name?",
+        Answer(
+            "Description" -> Text
+        )
+    ) { override def hashCode() = (uid, name).hashCode() + 1 }
 }
