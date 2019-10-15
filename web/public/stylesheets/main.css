@@ -36,4 +36,20 @@ body {
 
 #contentcontainer {
     margin: 0 auto;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+}
+
+.boxes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.box {
+    border: solid blue;
+    padding: 10px;
+    margin: 10px;
+    flex-basis: 40%;
+    flex-grow: 1;
 }
