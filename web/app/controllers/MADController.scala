@@ -8,6 +8,8 @@ import information._
 import questions._
 import model._
 import interpreter._
+import machinetype._
+import reference._
 
 
 @Singleton
@@ -38,6 +40,20 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     
     def concepts() = Action {
         Ok(views.html.concepts(model.concepts))
+    }
+    
+    def concept(uid : String) = Action {
+        
+        val concept = model.concepts(uid)
+        
+        val allMachines = for (machinetype <- MachineType.machineTypes) yield machinetype -> (for {
+            (muid, machine) <- model.machines
+            if Signature(machine, machinetype.signature, ConceptRef.BasicRef(uid))
+        } yield machine).toSeq
+        
+        val machines = allMachines.filter(!_._2.isEmpty)
+        
+        Ok(views.html.concept(concept, machines))
     }
     
     def answer() = Action { implicit request =>

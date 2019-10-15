@@ -1,0 +1,21 @@
+@import io.github.ProjectSophus.mad._
+@import model._
+@import machinetype._
+
+@(concept : Concept, machineTypes : Seq[(MachineType,Seq[Machine])])
+
+@main("MAD Concept") {
+  <h3>@concept.name</h3>
+  <div class="boxes">
+  @for((machinetype, machines) <- machineTypes) {
+      <div class="box">
+      <h4>Machines of type @machinetype:</h4>
+      <ol>
+      @for(machine <- machines) {
+          <li>@machine.name</li>
+      }
+      </ol>
+      </div>
+  }
+  </div>
+}
