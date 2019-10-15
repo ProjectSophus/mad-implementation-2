@@ -7,6 +7,13 @@
 @main("MAD Concept") {
   <h3>@concept.name</h3>
   <div class="boxes">
+  @for(desc <- concept.description) {
+      <div class="box">
+          <h4>Description:</h4>
+          @desc
+      </div>
+  }
+      
   @for((machinetype, machines) <- machineTypes) {
       <div class="box">
       <h4>Machines of type @machinetype:</h4>
