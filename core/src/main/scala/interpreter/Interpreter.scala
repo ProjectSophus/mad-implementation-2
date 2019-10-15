@@ -25,5 +25,17 @@ object Interpreter {
             
             Seq(NewMachine(muid, mname, domain, codomain))
         }
+        
+        case ConceptDescriptionQuestion(uid, _) => {
+            val description = data("Description").asInstanceOf[String]
+            
+            Seq(ConceptDescription(uid, description))
+        }
+        
+        case MachineDescriptionQuestion(uid, _) => {
+            val description = data("Description").asInstanceOf[String]
+            
+            Seq(MachineDescription(uid, description))
+        }
     }
 }
