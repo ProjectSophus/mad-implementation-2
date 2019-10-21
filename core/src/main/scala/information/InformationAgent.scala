@@ -1,7 +1,7 @@
 package io.github.ProjectSophus.mad.information
 
 import io.github.ProjectSophus.mad._
-import model._
+import model.mutable._
 import reference._
 
 object InformationAgent {

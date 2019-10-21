@@ -1,6 +1,6 @@
 package io.github.ProjectSophus.mad.questions
 
-import io.github.ProjectSophus.mad.model._
+import io.github.ProjectSophus.mad.model.immutable._
 import io.github.ProjectSophus.mad.machinetype._
 
 abstract sealed class Question(override val toString : String, val answer : Answer)

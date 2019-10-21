@@ -2,7 +2,7 @@ package io.github.ProjectSophus.mad.machinetype
 
 import io.github.ProjectSophus.mad._
 import reference._
-import model._
+import model.immutable._
 
 import Signature._
 
