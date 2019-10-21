@@ -10,12 +10,14 @@ import model._
 import interpreter._
 import machinetype._
 import reference._
+import memory._
 
 
 @Singleton
 class MADController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-    val model = Model()
+    val memory = Memory()
+    def model = memory.getModel
 
     def index() = Action {
         Ok(views.html.index())
@@ -39,7 +41,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     }
     
     def concepts() = Action {
-        Ok(views.html.concepts(model.concepts.toMap))
+        Ok(views.html.concepts(model.concepts))
     }
     
     def concept(uid : String) = Action {
@@ -74,9 +76,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val info = Interpreter(q, data)
         
-        info foreach { information =>
-            InformationAgent(information, model)
-        }
+        info foreach memory.applyInformation
         
         Ok(views.html.answer(info))
     }
