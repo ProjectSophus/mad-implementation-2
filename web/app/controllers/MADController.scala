@@ -15,7 +15,7 @@ import reference._
 @Singleton
 class MADController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
 
-    var model = Model()
+    val model = Model()
 
     def index() = Action {
         Ok(views.html.index())
@@ -39,7 +39,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     }
     
     def concepts() = Action {
-        Ok(views.html.concepts(model.concepts))
+        Ok(views.html.concepts(model.concepts.toMap))
     }
     
     def concept(uid : String) = Action {
@@ -75,7 +75,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         val info = Interpreter(q, data)
         
         info foreach { information =>
-            model = InformationAgent(information, model)
+            InformationAgent(information, model)
         }
         
         Ok(views.html.answer(info))

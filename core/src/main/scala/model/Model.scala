@@ -1,10 +1,12 @@
 package io.github.ProjectSophus.mad.model
 
+import collection._
+
 case class Model (
-    concepts : Map[String, Concept],
-    machines : Map[String, Machine]
+    concepts : mutable.Map[String, Concept],
+    machines : mutable.Map[String, Machine]
 )
 
 object Model {
-    def apply() : Model = Model(Map(), Map())
+    def apply() : Model = Model(mutable.Map(), mutable.Map())
 }
