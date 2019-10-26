@@ -1,9 +1,11 @@
 @import io.github.ProjectSophus.mad.questions._
+@import io.github.ProjectSophus.mad.information._
 @import Answer._
+
 
 @import helper._
 
-@(question : Question)(implicit request: RequestHeader)
+@(question : Question, answers : Seq[Information])(implicit request: RequestHeader)
 
 @main("MAD Question") {
     <h3>Question:</h3>
@@ -19,5 +21,14 @@
         }
         <input name="questionHash" type="text" value="@question.hashCode()" hidden>
         <input type="submit" value="Submit">
+    }
+    
+    @if(answers.length > 0) {
+        <h3>Previous answers:</h3>
+        <ol>
+        @for(info <- answers) {
+            <li>@info</li>
+        }
+        </ol>
     }
 }

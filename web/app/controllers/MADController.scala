@@ -36,7 +36,9 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         val questions = Question.questions(model)
         val q = questions.find(_.hashCode() == h).get
         
-        Ok(views.html.question(q))
+        val answers = memory.getAnswersTo(q)
+        
+        Ok(views.html.question(q, answers))
         
     }
     
