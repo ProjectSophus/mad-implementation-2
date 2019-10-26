@@ -4,9 +4,7 @@ import javax.inject._
 import play.api.mvc._
 
 import io.github.ProjectSophus.mad._
-import information._
 import questions._
-import model._
 import interpreter._
 import machinetype._
 import reference._
@@ -76,7 +74,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val info = Interpreter(q, data)
         
-        info foreach memory.applyInformation
+        info foreach {i => memory.applyInformation(q, i)}
         
         Ok(views.html.answer(info))
     }
