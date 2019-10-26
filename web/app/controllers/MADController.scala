@@ -25,7 +25,9 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val questions = Question.questions(model)
         
-        Ok(views.html.questions(questions))
+        val questionsWithAmount = questions.map {q => q -> memory.getAnswersTo(q).length}
+        
+        Ok(views.html.questions(questionsWithAmount))
     }
     
     def question(hash : String) = Action { implicit request =>

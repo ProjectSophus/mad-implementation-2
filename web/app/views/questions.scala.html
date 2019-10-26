@@ -1,12 +1,12 @@
 @import io.github.ProjectSophus.mad.questions._
 
-@(questions : Seq[Question])
+@(questions : Seq[(Question, Int)])
 
 @main("MAD Questions") {
   <h3>Questions:</h3>
   <ol>
-      @for(question <- questions) {
-          <li><a href="/questions/@{question.hashCode()}">@question</a></li>
+      @for((question, amount) <- questions) {
+          <li><a href="/questions/@{question.hashCode()}">(@amount) @question</a></li>
       }
   </ol>
 }
