@@ -10,8 +10,8 @@ class BasicMemory extends Memory {
     val answers : collection.mutable.Buffer[(Question, Information)] = collection.mutable.Buffer()
     
     def applyInformation(question : Question, info : Information) = {
-        answers += question -> info
         InformationAgent(info, model)
+        answers += question -> info
     }
     
     def getModel = model.toModel
