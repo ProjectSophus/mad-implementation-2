@@ -31,7 +31,7 @@ object Question {
     ) { override def hashCode() = (uid, name, machinetype).hashCode() }
     
     case object NewConceptQuestion extends Question (
-        f"Please name a new concept?",
+        f"What concepts are there?",
         Answer(
             "Unique ID" -> Text,
             "Name" -> Text
