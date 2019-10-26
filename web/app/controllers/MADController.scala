@@ -78,7 +78,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val info = Interpreter(q, data)
         
-        info foreach {i => memory.applyInformation(q, i)}
+        memory.applyInformation(q, info)
         
         Redirect(routes.MADController.question(hash))
     }

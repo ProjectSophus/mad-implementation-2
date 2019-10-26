@@ -9,12 +9,12 @@ import Question._
 import Information._
 
 object Interpreter {
-    def apply(q : Question, data : Map[String, Any]) : Seq[Information] = q match {
+    def apply(q : Question, data : Map[String, Any]) : Information = q match {
         case NewConceptQuestion => {
             val uid = data("Unique ID").asInstanceOf[String]
             val name = data("Name").asInstanceOf[String]
             
-            Seq(NewConcept(uid, name))
+            NewConcept(uid, name)
         }
         
         case MachineQuestion(uid, _, machinetype) => {
@@ -23,19 +23,19 @@ object Interpreter {
             
             val (domain, codomain) = machinetype.signature.createConceptRefs(ConceptRef.BasicRef(uid))
             
-            Seq(NewMachine(muid, mname, domain, codomain))
+            NewMachine(muid, mname, domain, codomain)
         }
         
         case ConceptDescriptionQuestion(uid, _) => {
             val description = data("Description").asInstanceOf[String]
             
-            Seq(ConceptDescription(uid, description))
+            ConceptDescription(uid, description)
         }
         
         case MachineDescriptionQuestion(uid, _) => {
             val description = data("Description").asInstanceOf[String]
             
-            Seq(MachineDescription(uid, description))
+            MachineDescription(uid, description)
         }
     }
 }
