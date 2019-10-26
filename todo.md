@@ -3,3 +3,4 @@
 * Replace answer page with question page
 * Add machine page
 * Add more content (questions)
+* Unify uid and name
