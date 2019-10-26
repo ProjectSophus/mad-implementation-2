@@ -60,8 +60,8 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.concept(concept, machines))
     }
     
-    def answer() = Action { implicit request =>
-        val h = request.body.asFormUrlEncoded.get.apply("questionHash").head.toInt
+    def answer(hash : String) = Action { implicit request =>
+        val h = hash.toInt
         
         val questions = Question.questions(model)
         val q = questions.find(_.hashCode() == h).get
@@ -80,7 +80,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         info foreach {i => memory.applyInformation(q, i)}
         
-        Ok(views.html.answer(info))
+        Redirect(routes.MADController.question(hash))
     }
     
 }

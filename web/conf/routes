@@ -5,6 +5,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /questions                  controllers.MADController.questions
 GET     /questions/:hash            controllers.MADController.question(hash)
 GET     /concepts                   controllers.MADController.concepts
-GET     /concepts/:uid               controllers.MADController.concept(uid)
+GET     /concepts/:uid              controllers.MADController.concept(uid)
 
-POST    /answer                     controllers.MADController.answer
+POST    /questions/:hash            controllers.MADController.answer(hash)
