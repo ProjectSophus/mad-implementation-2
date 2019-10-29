@@ -8,4 +8,5 @@ object Answer {
     abstract sealed class InputType[T]
     
     case object Text extends InputType[String]
+    case object LongText extends InputType[String]
 }

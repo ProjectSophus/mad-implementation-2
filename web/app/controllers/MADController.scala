@@ -73,6 +73,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
             
             inputtype match {
                 case Text => element
+                case LongText => element
             }
         }) : _*)
         
