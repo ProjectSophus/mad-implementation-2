@@ -31,7 +31,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     }
     
     def question(hash : String) = Action { implicit request =>
-        val h = hash.toInt
+        val h = java.lang.Long.parseLong(hash, 16).asInstanceOf[Int]
         
         val questions = Question.questions(model)
         val q = questions.find(_.hashCode() == h).get
@@ -61,7 +61,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     }
     
     def answer(hash : String) = Action { implicit request =>
-        val h = hash.toInt
+        val h = java.lang.Long.parseLong(hash, 16).asInstanceOf[Int]
         
         val questions = Question.questions(model)
         val q = questions.find(_.hashCode() == h).get

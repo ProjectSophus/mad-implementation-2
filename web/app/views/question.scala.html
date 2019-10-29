@@ -9,7 +9,7 @@
 
 @main("MAD Question") {
     <h3>Question:</h3>
-    @form(routes.MADController.answer(question.hashCode.toString)) {
+    @form(routes.MADController.answer(question.hashCode.toHexString)) {
         @CSRF.formField
         @question.toString <br>
         @for((label, inputtype) <- question.answer.elements) {
