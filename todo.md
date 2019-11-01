@@ -1,3 +1,2 @@
 * Make machines contained in concept optional (so antiexamples can be implemented)
-* Add machines page
 * Add more content (questions)

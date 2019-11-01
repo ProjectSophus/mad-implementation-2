@@ -60,6 +60,10 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.concept(concept, machines))
     }
     
+    def machines() = Action {
+        Ok(views.html.machines(model.machines))
+    }
+    
     def machine(uid : String) = Action {
         
         val machine = model.machines(uid)
