@@ -11,31 +11,29 @@ import Information._
 object Interpreter {
     def apply(q : Question, data : Map[String, Any]) : Information = q match {
         case NewConceptQuestion => {
-            val uid = data("Unique ID").asInstanceOf[String]
             val name = data("Name").asInstanceOf[String]
             
-            NewConcept(uid, name)
+            NewConcept(name)
         }
         
-        case MachineQuestion(uid, _, machinetype) => {
-            val muid = data("Unique ID").asInstanceOf[String]
+        case MachineQuestion(name, machinetype) => {
             val mname = data("Name").asInstanceOf[String]
             
-            val (domain, codomain) = machinetype.signature.createConceptRefs(ConceptRef.BasicRef(uid))
+            val (domain, codomain) = machinetype.signature.createConceptRefs(ConceptRef.BasicRef(name))
             
-            NewMachine(muid, mname, domain, codomain)
+            NewMachine(f"$mname (on $name)", domain, codomain)
         }
         
-        case ConceptDescriptionQuestion(uid, _) => {
+        case ConceptDescriptionQuestion(name) => {
             val description = data("Description").asInstanceOf[String]
             
-            ConceptDescription(uid, description)
+            ConceptDescription(name, description)
         }
         
-        case MachineDescriptionQuestion(uid, _) => {
+        case MachineDescriptionQuestion(name) => {
             val description = data("Description").asInstanceOf[String]
             
-            MachineDescription(uid, description)
+            MachineDescription(name, description)
         }
     }
 }

@@ -3,9 +3,9 @@ package io.github.ProjectSophus.mad
 abstract sealed class MADException(msg : String) extends Exception(msg)
 
 object MADException {
-    case class ConceptUIDTaken(uid : String) extends MADException(f"The uid $uid is taken!")
-    case object ConceptNameOrUIDEmpty extends MADException(f"The uid or name is empty!")
+    case class ConceptNameTaken(name : String) extends MADException(f"The name $name is taken!")
+    case object ConceptNameEmpty extends MADException(f"The concept name is empty!")
     
-    case class MachineUIDTaken(uid : String) extends MADException(f"The uid $uid is taken!")
-    case object MachineNameOrUIDEmpty extends MADException(f"The uid or name is empty!")
+    case class MachineNameTaken(name : String) extends MADException(f"The name $name is taken!")
+    case object MachineNameEmpty extends MADException(f"The machine name is empty!")
 }
