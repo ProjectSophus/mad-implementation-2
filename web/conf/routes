@@ -6,5 +6,6 @@ GET     /questions                  controllers.MADController.questions
 GET     /questions/:hash            controllers.MADController.question(hash)
 GET     /concepts                   controllers.MADController.concepts
 GET     /concepts/:uid              controllers.MADController.concept(uid)
+GET     /machines/:uid              controllers.MADController.machine(uid)
 
 POST    /questions/:hash            controllers.MADController.answer(hash)

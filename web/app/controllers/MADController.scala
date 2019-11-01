@@ -60,6 +60,13 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.concept(concept, machines))
     }
     
+    def machine(uid : String) = Action {
+        
+        val machine = model.machines(uid)
+        
+        Ok(views.html.machine(machine))
+    }
+    
     def answer(hash : String) = Action { implicit request =>
         val h = java.lang.Long.parseLong(hash, 16).asInstanceOf[Int]
         

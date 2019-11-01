@@ -1,0 +1,14 @@
+@import io.github.ProjectSophus.mad._
+@import model.immutable._
+
+@(machine : Machine)
+
+@main("MAD Machine") {
+  <h3>@machine.name</h3>
+  @for(desc <- machine.description) {
+      <h4>Description:</h4>
+      @desc
+  }
+
+  <a href="/machines">Back</a>
+}

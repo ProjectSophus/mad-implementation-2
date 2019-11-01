@@ -19,7 +19,7 @@
       <h4>Machines of type @machinetype:</h4>
       <ol>
       @for(machine <- machines) {
-          <li>@machine.name</li>
+          <li><a href="/machines/@machine.name">@machine.name</a></li>
       }
       </ol>
       </div>
