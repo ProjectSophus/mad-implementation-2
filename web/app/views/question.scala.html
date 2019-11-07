@@ -5,7 +5,7 @@
 
 @import helper._
 
-@(question : Question, answers : Seq[Information])(implicit request: RequestHeader)
+@(question : Question, answers : Seq[Seq[Information]])(implicit request: RequestHeader)
 
 @main("MAD Question") {
     <h3>Question:</h3>
@@ -26,8 +26,12 @@
     @if(answers.length > 0) {
         <h3>Previous answers:</h3>
         <ol>
-        @for(info <- answers) {
-            <li>@info</li>
+        @for(infoseq <- answers) {
+            <li>
+            @for(info <- infoseq) {
+                <p>@info</p>
+            }
+            </li>
         }
         </ol>
     }

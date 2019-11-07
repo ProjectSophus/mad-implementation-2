@@ -7,11 +7,11 @@ import questions._
 
 class BasicMemory extends Memory {
     val model : mutable.Model = mutable.Model()
-    val answers : collection.mutable.Buffer[(Question, Information)] = collection.mutable.Buffer()
+    val answers : collection.mutable.Buffer[(Question, Seq[Information])] = collection.mutable.Buffer()
     
-    def applyInformation(question : Question, info : Information) = {
-        InformationAgent(info, model)
-        answers += question -> info
+    def applyInformationSeq(question : Question, infoseq : Seq[Information]) = {
+        infoseq foreach {info => InformationAgent(info, model)}
+        answers += question -> infoseq
     }
     
     def getModel = model.toModel

@@ -90,7 +90,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val info = Interpreter(q, data)
         
-        memory.applyInformation(q, info)
+        memory.applyInformationSeq(q, info)
         
         Redirect(routes.MADController.question(hash))
     }
