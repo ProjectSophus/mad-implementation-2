@@ -21,7 +21,9 @@ object Interpreter {
             
             val (domain, codomain) = machinetype.signature.createConceptRefs(ConceptRef.BasicRef(name))
             
-            Seq(NewMachine(f"$mname (on $name)", domain, codomain))
+            val macname = f"$mname (on $name)"
+            
+            Seq(NewMachine(macname, domain, codomain), MachineRelevant(name, macname))
         }
         
         case ConceptDescriptionQuestion(name) => {

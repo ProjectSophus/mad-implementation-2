@@ -20,6 +20,10 @@ object InformationAgent {
             model.machines += name -> Machine(name, None, domain, codomain)
         }
         
+        case MachineRelevant(concept, machine) => {
+            model.concepts(concept).relatedMachines += machine
+        }
+        
         case ConceptDescription(name : String, description : String) => {
             model.concepts(name).description = Some(description)
         }
