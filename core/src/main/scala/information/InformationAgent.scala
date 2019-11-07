@@ -11,7 +11,7 @@ object InformationAgent {
         case NewConcept(name : String) => {
             if (model.concepts contains name) throw MADException.ConceptNameTaken(name)
             if (name == "") throw MADException.ConceptNameEmpty
-            model.concepts += name -> Concept(name, None)
+            model.concepts += name -> Concept(name, None, collection.mutable.Buffer())
         }
         
         case NewMachine(name : String, domain : ConceptRef, codomain : ConceptRef) => {
