@@ -51,7 +51,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         val concept = model.concepts(uid)
         
         val allMachines = for (machinetype <- MachineType.machineTypes) yield machinetype -> (for {
-            (muid, machine) <- concept.relatedMachines.map{ case MachineRef.BasicRef(ref) => ref -> model.machines(ref)}
+            (muid, machine) <- concept.relatedMachines.map{ case ref => ref -> model.machines(ref)}
             if Signature(machine, machinetype.signature, ConceptRef.BasicRef(uid))
         } yield machine).toSeq
         
