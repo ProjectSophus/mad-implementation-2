@@ -23,7 +23,7 @@ object Question {
     import Answer._
     
     case class MachineQuestion (name : String, machinetype : MachineType) extends Question (
-        f"Which machines of type $machinetype does $name have?",
+        f"Which ${machinetype.plural.toLowerCase} does $name have?",
         Answer(
             "Name" -> Text
         )
