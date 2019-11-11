@@ -30,7 +30,7 @@ object Signature {
         def createConceptRef(t : ConceptRef) = ConceptRef.CartesianProduct(left.createConceptRef(t), right.createConceptRef(t))
     }
     
-    def apply (machine : Machine, signature : Signature, t : ConceptRef) : Boolean = apply(machine.domain, signature.domain, t) & apply(machine.codomain, signature.codomain, t)
+    def apply (machine : AsMachine, signature : Signature, t : ConceptRef) : Boolean = apply(machine.domain, signature.domain, t) & apply(machine.codomain, signature.codomain, t)
     
     def apply (cr : ConceptRef, cp : ConceptPattern, t : ConceptRef) : Boolean = cp match {
         case T => cr == t

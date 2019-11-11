@@ -8,28 +8,27 @@ object InformationAgent {
     import Information._
     
     def apply (info : Information, model : Model) : Unit = info match {
-        case NewConcept(name : String) => {
-            if (model.concepts contains name) throw MADException.ConceptNameTaken(name)
-            if (name == "") throw MADException.ConceptNameEmpty
-            model.concepts += name -> Concept(name, None, collection.mutable.Buffer())
+        case NewObject(name : String) => {
+            if (model.objects contains name) throw MADException.ObjectNameTaken(name)
+            if (name == "") throw MADException.ObjectNameEmpty
+            model.objects += Object(name)
         }
         
-        case NewMachine(name : String, domain : ConceptRef, codomain : ConceptRef) => {
-            if (model.machines contains name) throw MADException.MachineNameTaken(name)
-            if (name == "") throw MADException.MachineNameEmpty
-            model.machines += name -> Machine(name, None, domain, codomain)
+        case IsConcept(name : String) => {
+            model.objects(name).asConcept = Some(AsConcept())
+        }
+        
+        case IsMachine(name : String, domain : ConceptRef, codomain : ConceptRef) => {
+            model.objects(name).asMachine = Some(AsMachine(domain, codomain))
         }
         
         case MachineRelevant(concept, machine) => {
-            model.concepts(concept).relatedMachines += machine
+            model.objects(concept).asConcept.get.relatedMachines += machine
         }
         
-        case ConceptDescription(name : String, description : String) => {
-            model.concepts(name).description = Some(description)
+        case Description(name : String, description : String) => {
+            model.objects(name).description = description
         }
         
-        case MachineDescription(name : String, description : String) => {
-            model.machines(name).description = Some(description)
-        }
     }
 }

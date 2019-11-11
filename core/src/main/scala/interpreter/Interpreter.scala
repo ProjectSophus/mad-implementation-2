@@ -13,7 +13,7 @@ object Interpreter {
         case NewConceptQuestion => {
             val name = data("Name").asInstanceOf[String]
             
-            Seq(NewConcept(name))
+            Seq(NewObject(name), IsConcept(name))
         }
         
         case MachineQuestion(name, machinetype) => {
@@ -23,19 +23,13 @@ object Interpreter {
             
             val macname = f"$mname (on $name)"
             
-            Seq(NewMachine(macname, domain, codomain), MachineRelevant(name, macname))
+            Seq(NewObject(macname), IsMachine(macname, domain, codomain), MachineRelevant(name, macname))
         }
         
-        case ConceptDescriptionQuestion(name) => {
+        case DescriptionQuestion(name) => {
             val description = data("Description").asInstanceOf[String]
             
-            Seq(ConceptDescription(name, description))
-        }
-        
-        case MachineDescriptionQuestion(name) => {
-            val description = data("Description").asInstanceOf[String]
-            
-            Seq(MachineDescription(name, description))
+            Seq(Description(name, description))
         }
     }
 }

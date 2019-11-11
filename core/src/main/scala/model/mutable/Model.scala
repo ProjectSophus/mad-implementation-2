@@ -5,15 +5,15 @@ import io.github.ProjectSophus.mad._
 import collection._
 
 case class Model (
-    concepts : mutable.Map[String, Concept],
-    machines : mutable.Map[String, Machine]
+    objects : mutable.Buffer[Object]
 ) {
     def toModel : model.immutable.Model = model.immutable.Model(
-        concepts.toMap.map{case (uid, concept) => uid -> concept.toConcept},
-        machines.toMap.map{case (uid, machine) => uid -> machine.toMachine}
+        objects.toSeq.map(_.toObject)
     )
+    
+    def objects(name : String) : Object = objects.toSeq.find(_.name == name).get
 }
 
 object Model {
-    def apply() : Model = Model(mutable.Map(), mutable.Map())
+    def apply() : Model = Model(mutable.Buffer())
 }

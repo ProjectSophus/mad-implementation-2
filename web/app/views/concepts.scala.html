@@ -1,12 +1,12 @@
 @import io.github.ProjectSophus.mad.model.immutable._
 
-@(concepts : Map[String, Concept])
+@(concepts : Seq[Object])
 
 @main("MAD Concepts") {
   <h3>Concepts:</h3>
   <ol>
-      @for((uid, concept) <- concepts) {
-          <li><a href="/concepts/@uid">@concept.name</a></li>
+      @for(concept <- concepts) {
+          <li><a href="/concepts/@concept.name">@concept.name</a></li>
       }
   </ol>
   <a href="/">Back</a>

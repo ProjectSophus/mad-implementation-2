@@ -9,15 +9,12 @@ object Question {
     def questions(model : Model) : Seq[Question] = Seq(
         Seq(NewConceptQuestion),
         for {
-            name <- model.concepts.keys.toSeq
+            name <- model.concepts.map(_.name)
             machinetype <- MachineType.machineTypes
         } yield MachineQuestion (name, machinetype),
         for {
-            name <- model.concepts.keys.toSeq
-        } yield ConceptDescriptionQuestion (name),
-        for {
-            name <- model.machines.keys.toSeq
-        } yield MachineDescriptionQuestion (name)
+            name <- model.objects.map(_.name)
+        } yield DescriptionQuestion (name),
     ).flatten
     
     import Answer._
@@ -36,17 +33,10 @@ object Question {
         )
     ) { override def hashCode() = 0 }
     
-    case class ConceptDescriptionQuestion (name : String) extends Question (
+    case class DescriptionQuestion (name : String) extends Question (
         f"What is the description of $name?",
         Answer(
             "Description" -> LongText
         )
     ) { override def hashCode() = name.hashCode() }
-    
-    case class MachineDescriptionQuestion (name : String) extends Question (
-        f"What is the description of $name?",
-        Answer(
-            "Description" -> LongText
-        )
-    ) { override def hashCode() = name.hashCode() + 1 }
 }

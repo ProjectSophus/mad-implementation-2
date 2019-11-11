@@ -48,11 +48,11 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     
     def concept(uid : String) = Action {
         
-        val concept = model.concepts(uid)
+        val concept = model.objects(uid)
         
         val allMachines = for (machinetype <- MachineType.machineTypes) yield machinetype -> (for {
-            (muid, machine) <- concept.relatedMachines.map{ case ref => ref -> model.machines(ref)}
-            if Signature(machine, machinetype.signature, ConceptRef.BasicRef(uid))
+            (muid, machine) <- concept.asConcept.get.relatedMachines.map{ case ref => ref -> model.objects(ref)}
+            if Signature(machine.asMachine.get, machinetype.signature, ConceptRef.BasicRef(uid))
         } yield machine).toSeq
         
         val machines = allMachines.filter(!_._2.isEmpty)
@@ -66,7 +66,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     
     def machine(uid : String) = Action {
         
-        val machine = model.machines(uid)
+        val machine = model.objects(uid)
         
         Ok(views.html.machine(machine))
     }
