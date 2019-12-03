@@ -11,7 +11,7 @@ case class Model (
         objects.toSeq.map(_.toObject)
     )
     
-    def objects(name : String) : Object = objects.toSeq.find(_.name == name).get
+    def obj(name : String) : Object = objects.toSeq.find(_.name == name).get
 }
 
 object Model {
