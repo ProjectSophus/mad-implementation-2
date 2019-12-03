@@ -9,6 +9,7 @@ import interpreter._
 import machinetype._
 import reference._
 import memory._
+import model.immutable._
 
 
 @Singleton
@@ -48,11 +49,11 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     
     def concept(uid : String) = Action {
         
-        val concept = model.objects(uid)
+        val concept = model.obj(uid)
         
         val allMachines = for (machinetype <- MachineType.machineTypes) yield machinetype -> (for {
-            (muid, machine) <- concept.asConcept.get.relatedMachines.map{ case ref => ref -> model.objects(ref)}
-            if Signature(machine.asMachine.get, machinetype.signature, ConceptRef.BasicRef(uid))
+            (muid, machine) <- concept.getStructure[Structure.Concept].relatedObjects.map{ case ref => ref -> model.obj(ref)}
+            if Signature(machine.getStructure[Structure.Machine], machinetype.signature, ConceptRef.BasicRef(uid))
         } yield machine).toSeq
         
         val machines = allMachines.filter(!_._2.isEmpty)
@@ -66,7 +67,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
     
     def machine(uid : String) = Action {
         
-        val machine = model.objects(uid)
+        val machine = model.obj(uid)
         
         Ok(views.html.machine(machine))
     }
