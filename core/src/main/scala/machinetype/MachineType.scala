@@ -8,18 +8,14 @@ object MachineType {
     import Signature._
     
     val machineTypes = Seq(
-        Representation,
         Operation,
         Function,
         Relation,
-        Property,
-        Example
+        Property
     )
     
-    case object Representation extends MachineType (T -> REPR, "Representations")
     case object Operation extends MachineType (T * T -> T, "Operations")
     case object Function extends MachineType (T -> T, "Functions")
     case object Relation extends MachineType (T * T -> BOOL, "Relations")
     case object Property extends MachineType (T -> BOOL, "Properties")
-    case object Example extends MachineType (STAR -> T, "Examples")
 }
