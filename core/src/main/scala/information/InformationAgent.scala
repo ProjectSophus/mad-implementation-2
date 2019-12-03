@@ -15,19 +15,21 @@ object InformationAgent {
         }
         
         case IsConcept(name : String) => {
-            model.objects(name).asConcept = Some(AsConcept())
+            model.obj(name).structure = Some(Some(Structure.Concept()))
         }
         
         case IsMachine(name : String, domain : ConceptRef, codomain : ConceptRef) => {
-            model.objects(name).asMachine = Some(AsMachine(domain, codomain))
+            model.obj(name).structure = Some(Some(Structure.Machine(domain, codomain)))
         }
         
-        case MachineRelevant(concept, machine) => {
-            model.objects(concept).asConcept.get.relatedMachines += machine
+        case ObjectRelevant(concept, ob) => {
+            if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
+            model.obj(concept).getStructure[Structure.Concept].relatedObjects += ob
+            ()
         }
         
         case Description(name : String, description : String) => {
-            model.objects(name).description = description
+            model.obj(name).description = Some(description)
         }
         
     }

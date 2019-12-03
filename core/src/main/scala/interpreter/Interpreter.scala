@@ -23,7 +23,7 @@ object Interpreter {
             
             val macname = f"$mname (on $name)"
             
-            Seq(NewObject(macname), IsMachine(macname, domain, codomain), MachineRelevant(name, macname))
+            Seq(NewObject(macname), IsMachine(macname, domain, codomain), ObjectRelevant(name, macname))
         }
         
         case DescriptionQuestion(name) => {
