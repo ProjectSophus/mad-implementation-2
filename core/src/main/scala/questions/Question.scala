@@ -67,7 +67,7 @@ object Question {
     )
     
     case class MachineQuestion (name : String, machinetype : MachineType) extends Question (
-        f"Which ${machinetype.plural.toLowerCase} does $name have?",
+        f"Which ${machinetype.plural.toLowerCase} do $name have?",
         Answer("Name" -> Text)
     )
 }
