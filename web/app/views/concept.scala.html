@@ -1,8 +1,7 @@
 @import io.github.ProjectSophus.mad._
 @import model.immutable._
-@import machinetype._
 
-@(concept : Object, machineTypes : Seq[(MachineType,Seq[Object])])
+@(concept : Object, boxes : Seq[(String,Seq[String])])
 
 @main("MAD Concept") {
   <h3>@concept.name</h3>
@@ -14,12 +13,12 @@
       </div>
   }
       
-  @for((machinetype, machines) <- machineTypes) {
+  @for((boxname, machines) <- boxes) {
       <div class="box">
-      <h4>@machinetype.plural:</h4>
+      <h4>@boxname:</h4>
       <ol>
       @for(machine <- machines) {
-          <li><a href="/machines/@machine.name">@machine.name</a></li>
+          <li><a href="/machines/@machine">@machine</a></li>
       }
       </ol>
       </div>

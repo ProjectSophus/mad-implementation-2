@@ -51,14 +51,24 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val concept = model.obj(uid)
         
-        val allMachines = for (machinetype <- MachineType.machineTypes) yield machinetype -> (for {
+        if(!concept.hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(uid)
+        
+        val examples = concept.getStructure[Structure.Concept].examples
+        
+        val representations = for {
+            (name, repr) <- concept.getStructure[Structure.Concept].relatedObjects.map{ case ref => ref -> model.obj(ref)}
+            if repr.hasStructure[Structure.Representation]
+        } yield name
+            
+        val allMachines = for {machinetype <- MachineType.machineTypes} yield machinetype.plural -> (for {
             (muid, machine) <- concept.getStructure[Structure.Concept].relatedObjects.map{ case ref => ref -> model.obj(ref)}
+            if machine.hasStructure[Structure.Machine]
             if Signature(machine.getStructure[Structure.Machine], machinetype.signature, ConceptRef.BasicRef(uid))
-        } yield machine).toSeq
+        } yield muid).toSeq
         
         val machines = allMachines.filter(!_._2.isEmpty)
         
-        Ok(views.html.concept(concept, machines))
+        Ok(views.html.concept(concept, Seq(("Examples", examples), ("Representations", representations)) ++ machines))
     }
     
     def machines() = Action {
