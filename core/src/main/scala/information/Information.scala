@@ -10,6 +10,10 @@ object Information {
     case class IsConcept(name : String) extends Information(f"The object $name is a concept")
     case class IsMachine(name : String, domain : ConceptRef, codomain : ConceptRef) extends Information(f"The object $name is a machine that goes from $domain to $codomain")
     
+    case class IsRepresentation(name : String) extends Information(f"The object $name is a representation")
+    
+    case class IsExampleOf(concept : String, example : String) extends Information(f"The object $example is an example of $concept")
+    
     case class ObjectRelevant(concept : String, ob : String) extends Information(f"The object $ob is relevant to $concept")
     
     case class Description(name : String, description : String) extends Information(f"""The object $name has description "$description"""")
