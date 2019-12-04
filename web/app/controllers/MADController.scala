@@ -39,7 +39,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val answers = memory.getAnswersTo(q)
         
-        Ok(views.html.question(q, answers))
+        Ok(views.html.question(q, answers, model))
         
     }
     
@@ -84,8 +84,8 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
             import Answer._
             
             inputtype match {
-                case Text => element
-                case LongText => element
+                case Label => ()
+                case Text | LongText | ConceptRef | Object | Machine => element
             }
         }) : _*)
         

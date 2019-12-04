@@ -1,11 +1,12 @@
 @import io.github.ProjectSophus.mad.questions._
 @import io.github.ProjectSophus.mad.information._
+@import io.github.ProjectSophus.mad.model.immutable.Model
 @import Answer._
 
 
 @import helper._
 
-@(question : Question, answers : Seq[Seq[Information]])(implicit request: RequestHeader)
+@(question : Question, answers : Seq[Seq[Information]], model : Model)(implicit request: RequestHeader)
 
 @main("MAD Question") {
     <h3>Question:</h3>
@@ -13,10 +14,23 @@
         @CSRF.formField
         @question.toString <br>
         @for((label, inputtype) <- question.answer.elements) {
-            @label:
+            @label
             @inputtype match {
-                case Text => {<input name="@label" type="text">}
+                case Label => {}
+                case Text | ConceptRef => {<input name="@label" type="text">}
                 case LongText => {<br><textarea name="@label"></textarea>}
+                case Object | Machine => {
+                    <input name="@label" type="text" list="@label">
+                    <datalist id="@label">
+                        @for(obj <- inputtype match {
+                            case Object => model.objects
+                            case Machine => model.machines
+                            case _ => Seq()
+                        }) {
+                            <option value="@obj.name">
+                        }
+                    </datalist>
+                }
             }
             <br>
         }
