@@ -17,10 +17,10 @@
             @label
             @inputtype match {
                 case Label => {}
-                case Text | ConceptRef => {<input name="@label" type="text">}
+                case Text => {<input name="@label" type="text" autocomplete="off">}
                 case LongText => {<br><textarea name="@label"></textarea>}
-                    <input name="@label" type="text" list="@label">
                 case Object | Machine | ConceptRef => {
+                    <input name="@label" type="text" list="@label" autocomplete="off">
                     <datalist id="@label">
                         @for(obj <- inputtype match {
                             case Object => model.objects
