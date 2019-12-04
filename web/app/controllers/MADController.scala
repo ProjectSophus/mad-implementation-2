@@ -95,7 +95,8 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
             
             inputtype match {
                 case Label => ()
-                case Text | LongText | ConceptRef | Object | Machine => element
+                case Text | LongText | Object | Machine => element
+                case ConceptRef => ???
             }
         }) : _*)
         

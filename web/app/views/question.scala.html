@@ -19,12 +19,13 @@
                 case Label => {}
                 case Text | ConceptRef => {<input name="@label" type="text">}
                 case LongText => {<br><textarea name="@label"></textarea>}
-                case Object | Machine => {
                     <input name="@label" type="text" list="@label">
+                case Object | Machine | ConceptRef => {
                     <datalist id="@label">
                         @for(obj <- inputtype match {
                             case Object => model.objects
                             case Machine => model.machines
+                            case ConceptRef => model.concepts
                             case _ => Seq()
                         }) {
                             <option value="@obj.name">
