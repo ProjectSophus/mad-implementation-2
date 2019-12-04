@@ -8,4 +8,5 @@ abstract sealed class Structure
 object Structure {
     case class Concept (relatedObjects : Seq[String], examples : Seq[String]) extends Structure
     case class Machine (domain : ConceptRef, codomain : ConceptRef) extends Structure
+    case class Representation () extends Structure
 }

@@ -16,4 +16,8 @@ object Structure {
     case class Machine (domain : ConceptRef, codomain : ConceptRef) extends Structure {
         def toStructure = immutable.Structure.Machine(domain, codomain)
     }
+    
+    case class Representation () extends Structure {
+        def toStructure = immutable.Structure.Representation()
+    }
 }
