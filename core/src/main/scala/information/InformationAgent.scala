@@ -22,6 +22,16 @@ object InformationAgent {
             model.obj(name).structure = Some(Some(Structure.Machine(domain, codomain)))
         }
         
+        case IsRepresentation(name) => {
+            model.obj(name).structure = Some(Some(Structure.Representation()))
+        }
+        
+        case IsExampleOf(concept, example) => {
+            if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
+            model.obj(concept).getStructure[Structure.Concept].examples += example
+            ()
+        }
+        
         case ObjectRelevant(concept, ob) => {
             if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
             model.obj(concept).getStructure[Structure.Concept].relatedObjects += ob
