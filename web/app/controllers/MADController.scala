@@ -89,7 +89,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
             }
         }) : _*)
         
-        val info = Interpreter(q, data)
+        val info = Interpreter(q, data, model)
         
         memory.applyInformationSeq(q, info)
         
