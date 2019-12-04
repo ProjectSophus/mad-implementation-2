@@ -9,7 +9,7 @@ abstract sealed class Question(override val toString : String, val answer : Answ
 
 object Question {
     def questions(model : Model) : Seq[Question] = Seq(
-        Seq(NewConceptQuestion),
+        Seq(NewConceptQuestion, NewMachineQuestion),
         
         for {
             name <- model.objects.map(_.name)
