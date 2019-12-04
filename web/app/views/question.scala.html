@@ -16,7 +16,7 @@
         @for((label, inputtype) <- question.answer.elements) {
             @label
             @inputtype match {
-                case Label => {}
+                case Label => {<input name="@label" hidden>}
                 case Text => {<input name="@label" type="text" autocomplete="off">}
                 case LongText => {<br><textarea name="@label"></textarea>}
                 case Object | Machine | ConceptRef => {
