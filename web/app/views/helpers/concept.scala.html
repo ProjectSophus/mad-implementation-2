@@ -1,0 +1,14 @@
+@(boxes : Seq[(String,Seq[String])])
+
+<div class="boxes">
+    @for((boxname, elements) <- boxes) {
+        <div class="box">
+            <h4>@boxname:</h4>
+            <ol>
+                @for(element <- elements) {
+                    <li><a href="/objects/@element">@element</a></li>
+                }
+            </ol>
+        </div>
+    }
+</div>

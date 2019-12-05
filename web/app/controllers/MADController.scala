@@ -3,6 +3,8 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 
+import play.twirl.api._
+
 import io.github.ProjectSophus.mad._
 import questions._
 import interpreter._
@@ -55,35 +57,34 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.objects("Machines", model.machines))
     }
     
-    def concept(uid : String) = Action {
+    def viewobject(uid : String) = Action {
+        val obj = model.obj(uid)
         
-        val concept = model.obj(uid)
+        val extra : Html = if(obj.hasStructure[Structure]) obj.getStructure[Structure] match {
+            case structure : Structure.Representation => html"This is a representation"
+            case structure : Structure.Machine => html"This is a machine"
+            case structure : Structure.Concept => {
+                
+                val examples = structure.examples
+                
+                val representations = for {
+                    (name, repr) <- structure.relatedObjects.map{ case ref => ref -> model.obj(ref)}
+                    if repr.hasStructure[Structure.Representation]
+                } yield name
+                    
+                val allMachines = for {machinetype <- MachineType.machineTypes} yield machinetype.plural -> (for {
+                    (muid, machine) <- structure.relatedObjects.map{ case ref => ref -> model.obj(ref)}
+                    if machine.hasStructure[Structure.Machine]
+                    if Signature(machine.getStructure[Structure.Machine], machinetype.signature, ConceptRef.BasicRef(uid))
+                } yield muid).toSeq
+                
+                val machines = allMachines.filter(!_._2.isEmpty)
+                
+                views.html.helpers.concept(Seq(("Examples", examples), ("Representations", representations)) ++ machines)
+            }
+        } else html""
         
-        if(!concept.hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(uid)
-        
-        val examples = concept.getStructure[Structure.Concept].examples
-        
-        val representations = for {
-            (name, repr) <- concept.getStructure[Structure.Concept].relatedObjects.map{ case ref => ref -> model.obj(ref)}
-            if repr.hasStructure[Structure.Representation]
-        } yield name
-            
-        val allMachines = for {machinetype <- MachineType.machineTypes} yield machinetype.plural -> (for {
-            (muid, machine) <- concept.getStructure[Structure.Concept].relatedObjects.map{ case ref => ref -> model.obj(ref)}
-            if machine.hasStructure[Structure.Machine]
-            if Signature(machine.getStructure[Structure.Machine], machinetype.signature, ConceptRef.BasicRef(uid))
-        } yield muid).toSeq
-        
-        val machines = allMachines.filter(!_._2.isEmpty)
-        
-        Ok(views.html.concept(concept, Seq(("Examples", examples), ("Representations", representations)) ++ machines))
-    }
-    
-    def machine(uid : String) = Action {
-        
-        val machine = model.obj(uid)
-        
-        Ok(views.html.machine(machine))
+        Ok(views.html.viewobject(obj, extra))
     }
     
     def answer(hash : String) = Action { implicit request =>
