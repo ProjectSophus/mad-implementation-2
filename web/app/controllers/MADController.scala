@@ -43,8 +43,16 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
     }
     
+    def objects() = Action {
+        Ok(views.html.objects("Objects", model.objects))
+    }
+    
     def concepts() = Action {
-        Ok(views.html.concepts(model.concepts))
+        Ok(views.html.objects("Concepts", model.concepts))
+    }
+    
+    def machines() = Action {
+        Ok(views.html.objects("Machines", model.machines))
     }
     
     def concept(uid : String) = Action {
@@ -69,10 +77,6 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         val machines = allMachines.filter(!_._2.isEmpty)
         
         Ok(views.html.concept(concept, Seq(("Examples", examples), ("Representations", representations)) ++ machines))
-    }
-    
-    def machines() = Action {
-        Ok(views.html.machines(model.machines))
     }
     
     def machine(uid : String) = Action {
