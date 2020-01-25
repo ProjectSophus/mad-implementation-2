@@ -57,6 +57,27 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.objects("Machines", model.machines))
     }
     
+    def loadLibrary() = Action {
+        
+        memory.clear()
+        
+        import scala.io.Source
+        
+        val source = Source.fromFile("library.mad")
+        val file = try source.mkString finally source.close
+        
+        import lang._
+        import parser._
+        
+        val ast = Parser.getAST(file)
+        
+        val info = Compiler.compileASTtoInformation(ast)
+        
+        memory.applyInformationSeq(Question.NullQuestion, info)
+        
+        Redirect(routes.MADController.index)
+    }
+    
     def clear() = Action {
         
         memory.clear()
