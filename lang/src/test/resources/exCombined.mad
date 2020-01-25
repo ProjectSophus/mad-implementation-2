@@ -1,0 +1,20 @@
+
+Sealed Concept Rings;
+
+Template Ring [R is Concept] {
+    Example <R> Rings;
+    
+    Operation on <R> {Addition, Multiplication};
+    Function on <R> Inversion
+    
+    Machine IntegerInclusion :: Integers -> <R>
+};
+
+Concept Integers;
+UseTemplate Ring Integers;
+
+Concept Polynomials[C :: Rings];
+
+Foreach (R :: Rings) { UseTemplate Ring Polynomials[R]; };
+
+// Does this cause infinite loop?

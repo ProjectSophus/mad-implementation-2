@@ -1,0 +1,14 @@
+
+Sealed Concept Rings;
+
+Template Ring [R is Concept] {
+    Example <R> Rings;
+    
+    Operation on <R> {Addition, Multiplication};
+    Function on <R> Inversion
+    
+    Machine IntegerInclusion :: Integers -> <R>
+};
+
+Concept {Integers, Polynomials};
+UseTemplate Ring {Integers, Polynomials};

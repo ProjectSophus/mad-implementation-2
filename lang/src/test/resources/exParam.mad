@@ -1,0 +1,11 @@
+
+Concept Rings;
+Concept AbelianGroups;
+
+Example Rings Integers;
+Example Rings Rationals;
+
+Concept Modules[R :: Rings];
+
+Machine ZModIsAb :: Modules[Integers] -> AbelianGroups
+Machine AbIsZMod :: AbelianGroups -> Modules[Integers]
