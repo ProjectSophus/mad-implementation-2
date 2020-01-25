@@ -30,3 +30,8 @@ lazy val web = (project in file("web"))
         name := "MAD-web"
     ).dependsOn(core).enablePlugins(PlayScala)
 
+lazy val lang = (project in file("lang"))
+    .settings(
+        commonSettings,
+        name := "MAD-lang"
+    ).dependsOn(core)
