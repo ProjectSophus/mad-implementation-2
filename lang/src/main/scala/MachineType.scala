@@ -1,12 +1,14 @@
 package io.github.ProjectSophus.mad.lang
 
-abstract sealed class MachineType
+import io.github.ProjectSophus.mad.machinetype.{MachineType => MT}
+
+abstract sealed class MachineType(val machinetype : MT)
 
 object MachineType {
     
-    case object Operation extends MachineType
-    case object Function extends MachineType
-    case object Relation extends MachineType
-    case object Property extends MachineType
+    case object Operation extends MachineType(MT.Operation)
+    case object Function extends MachineType(MT.Function)
+    case object Relation extends MachineType(MT.Relation)
+    case object Property extends MachineType(MT.Property)
     
 }
