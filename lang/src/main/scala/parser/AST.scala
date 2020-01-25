@@ -2,11 +2,16 @@ package io.github.ProjectSophus.mad.lang.parser
 
 import io.github.ProjectSophus.mad.lang._
 
-abstract sealed class AST
+abstract sealed class AST {def expand : AST}
 
 object AST {
     
-    case class Module(decs : Declaration*) extends AST
+    case class Module(decs : Declaration*) extends AST {
+        def expand : Module = Module((for {
+            decs1 <- decs
+            dec <- expandDec(decs1)
+        } yield dec) : _*)
+    }
     
     abstract sealed class Declaration
     
@@ -20,7 +25,7 @@ object AST {
     
     case class Object(name : String)
     
-    def expand (dec : Declaration) : Seq[Declaration] = dec match {
+    def expandDec (dec : Declaration) : Seq[Declaration] = dec match {
         case IsConcept(obj) => for (sobj <- obj) yield IsConcept(Seq(sobj))
         case IsExample(conc, obj) => for (sconc <- conc; sobj <- obj) yield IsExample(Seq(sconc), Seq(sobj))
         case IsAntiexample(conc, obj) => for (sconc <- conc; sobj <- obj) yield IsAntiexample(Seq(sconc), Seq(sobj))
