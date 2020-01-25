@@ -1,7 +1,6 @@
 package io.github.ProjectSophus.mad.lang.parser.lexer
 
 import scala.util.parsing.combinator._
-import scala.util.matching.Regex
 
 
 object Lexer extends RegexParsers {

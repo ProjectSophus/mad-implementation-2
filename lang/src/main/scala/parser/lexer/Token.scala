@@ -1,8 +1,10 @@
 package io.github.ProjectSophus.mad.lang.parser.lexer
 
+import io.github.ProjectSophus.mad.lang._
+
 import scala.util.parsing.input._
 
-abstract sealed class Token(str : String) extends Positional
+abstract sealed class Token(val str : String) extends Positional
 
 object Token {
     
@@ -10,33 +12,37 @@ object Token {
     
     abstract sealed class Keyword(keyword : String) extends Token(keyword)
     
+    abstract sealed class MachineTypeKeyword(keyword : String, val machinetype : MachineType) extends Keyword(keyword)
+    
     case object Concept extends Keyword("Concept")
     case object Example extends Keyword("Example")
     case object Antiexample extends Keyword("Antiexample")
     case object Representation extends Keyword("Representation of")
-    case object Operation extends Keyword("Operation on")
-    case object Function extends Keyword("Function on")
-    case object Relation extends Keyword("Relation on")
-    case object Property extends Keyword("Property on")
+    case object Machine extends Keyword("Machine")
+    case object Operation extends MachineTypeKeyword("Operation on", MachineType.Operation)
+    case object Function extends MachineTypeKeyword("Function on", MachineType.Function)
+    case object Relation extends MachineTypeKeyword("Relation on", MachineType.Relation)
+    case object Property extends MachineTypeKeyword("Property on", MachineType.Property)
     
-    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Operation, Function, Relation, Property)
+    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Machine, Operation, Function, Relation, Property)
     
     abstract sealed class Punctuation(symbol : String) extends Token(symbol)
     
+    case object Semicolon extends Punctuation(";")
     case object DoubleColon extends Punctuation("::")
-    case object Machine extends Punctuation("->")
+    case object Arrow extends Punctuation("->")
     case object TupleOpen extends Punctuation("(")
     case object TupleClose extends Punctuation(")")
     case object GroupOpen extends Punctuation("{")
     case object GroupClose extends Punctuation("}")
     case object Separator extends Punctuation(",")
     
-    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Machine, TupleOpen, TupleClose, GroupOpen, GroupClose, Separator)
+    val punctuation : Seq[Punctuation] = Seq(Semicolon, DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, Separator)
     
     case class Comment(content : String) extends Token("/* " + content + " */")
     
     case class Identifier (val name : String) extends Token(name)
     
-    case class StringLiteral (val content : String) extends Token("\"" + content + "\"")*/
+    case class StringLiteral (val content : String) extends Token("\"" + content + "\"")
     
 }
