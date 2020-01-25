@@ -70,4 +70,6 @@ object Question {
         f"Which ${machinetype.plural.toLowerCase} do $name have?",
         Answer("Name" -> Text)
     )
+    
+    case object NullQuestion extends Question("", Answer())
 }
