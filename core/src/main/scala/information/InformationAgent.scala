@@ -8,10 +8,13 @@ object InformationAgent {
     import Information._
     
     def apply (info : Information, model : Model) : Unit = info match {
-        case NewObject(name : String) => {
-            if (model.objects contains name) throw MADException.ObjectNameTaken(name)
-            if (name == "") throw MADException.ObjectNameEmpty
-            model.objects += Object(name)
+        case NewObject(name : String, okayIfExists : Boolean) => {
+            if (model.objects.exists(_.name == name)) {
+                if(!okayIfExists) throw MADException.ObjectNameTaken(name)
+            } else {
+                if (name == "") throw MADException.ObjectNameEmpty
+                model.objects += Object(name)
+            }
         }
         
         case IsConcept(name : String) => {

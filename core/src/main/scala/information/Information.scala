@@ -6,7 +6,7 @@ import reference._
 abstract sealed class Information (override val toString : String)
 
 object Information {
-    case class NewObject(name : String) extends Information(f"There is an object named $name")
+    case class NewObject(name : String, okayIfExists : Boolean = false) extends Information(f"There is an object named $name")
     case class IsConcept(name : String) extends Information(f"The object $name is a concept")
     case class IsMachine(name : String, domain : ConceptRef, codomain : ConceptRef) extends Information(f"The object $name is a machine that goes from $domain to $codomain")
     
