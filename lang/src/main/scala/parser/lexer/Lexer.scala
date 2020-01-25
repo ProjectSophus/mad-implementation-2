@@ -1,4 +1,4 @@
-package io.github.torsteinvik.flow.parser.lexer
+package io.github.ProjectSophus.mad.lang.parser.lexer
 
 import scala.util.parsing.combinator._
 import scala.util.matching.Regex
