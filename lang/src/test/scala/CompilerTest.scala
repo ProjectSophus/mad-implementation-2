@@ -10,7 +10,7 @@ class CompilerTest extends FunSuite {
     import scala.io.Source
     
     test ("Compiling example1.mad") {
-        val source = Source.fromURL(getClass.getResource("/example1.mad"))
+        val source = Source.fromURL(getClass.getResource("/exBasic.mad"))
         val file = try source.mkString finally source.close
         val ast = Parser.getAST(file)
         
