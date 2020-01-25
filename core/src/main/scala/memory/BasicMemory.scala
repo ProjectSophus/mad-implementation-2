@@ -6,7 +6,7 @@ import information._
 import questions._
 
 class BasicMemory extends Memory {
-    val model : mutable.Model = mutable.Model()
+    var model : mutable.Model = mutable.Model()
     val answers : collection.mutable.Buffer[(Question, Seq[Information])] = collection.mutable.Buffer()
     
     def applyInformationSeq(question : Question, infoseq : Seq[Information]) = {
@@ -16,5 +16,10 @@ class BasicMemory extends Memory {
     
     def getModel = model.toModel
     def getAnswersTo(question : Question) = answers.collect{case (`question`, info) => info}.toSeq
+    
+    def clear() : Unit = {
+        answers.clear()
+        model = mutable.Model()
+    }
     
 }

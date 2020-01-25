@@ -11,6 +11,8 @@ trait Memory {
     
     def getModel : Model
     def getAnswersTo(question : Question) : Seq[Seq[Information]]
+    
+    def clear() : Unit
 }
 
 object Memory {
