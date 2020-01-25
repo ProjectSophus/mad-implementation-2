@@ -1,4 +1,6 @@
-package io.github.ProjectSophus.mad.lang
+package io.github.ProjectSophus.mad.lang.parser
+
+import io.github.ProjectSophus.mad.lang._
 
 abstract sealed class AST
 
