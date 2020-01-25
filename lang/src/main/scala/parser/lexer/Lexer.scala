@@ -23,7 +23,7 @@ object Lexer extends RegexParsers {
     
     def identifier : Parser[Token] = """[A-Za-z0-9\-_]+""".r ^^ (new Identifier(_))
     
-    def stringLiteral : Parser[Token] = """"((?:\\"|(?:(?!").))*)"""".r ^^ (StringLiteral(_))
+    def stringLiteral : Parser[Token] = """"((?:\\"|(?:(?!").))*)"""".r ^^ {case t => StringLiteral(t.drop(1).dropRight(1))}
     
     def singlelinecomment : Parser[Token] = """\/\/.*\r?\n""".r ^^ (Comment(_))
     def multilinecomment : Parser[Token] = """\/\*((?!\*\/).|\r?\n)*\*\/""".r ^^ (Comment(_))
