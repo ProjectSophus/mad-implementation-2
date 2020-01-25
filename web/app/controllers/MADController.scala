@@ -57,6 +57,13 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         Ok(views.html.objects("Machines", model.machines))
     }
     
+    def clear() = Action {
+        
+        memory.clear()
+        
+        Redirect(routes.MADController.index)
+    }
+    
     def viewobject(uid : String) = Action {
         val obj = model.obj(uid)
         
