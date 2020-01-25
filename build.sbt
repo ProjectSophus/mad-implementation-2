@@ -8,8 +8,8 @@ lazy val commonSettings = Seq(
 
     // Dependencies
     // Scalatest
-    //libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.4",
-    //libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test",
+    libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.4",
+    libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test",
     
     // Scala parser combinators
     libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6"
