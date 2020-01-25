@@ -1,0 +1,19 @@
+
+Concept {"Natural numbers", Integers}
+
+Example "Natural numbers" {1, 2, 3, 4, 5}
+Antiexample "Natural numbers" {-1, -5, 1.5, pi}
+
+Example Integers {-2, -1, 0, 1, 2, 3, 4, 5}
+Antiexample Integers {1.5, pi}
+
+Representation of {Integers, "Natural numbers"} {Decimal, Binary, Hexadecimal}
+Representation of "Natural numbers" Roman
+
+Operation on {"Natural numbers", Integers} {Addition, Multiplication}
+Function on Integers Inversion
+Function on "Natural numbers" Factorial
+Property on Integers {Positive, Negative, Non-positive, Non-negative}
+Property on "Natural numbers" Prime
+
+Machine Power :: (Integers, "Natural numbers") -> Integers
