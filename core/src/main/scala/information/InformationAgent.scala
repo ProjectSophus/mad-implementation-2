@@ -32,6 +32,12 @@ object InformationAgent {
             ()
         }
         
+        case IsAntiexampleOf(concept, antiexample) => {
+            if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
+            model.obj(concept).getStructure[Structure.Concept].antiexamples += antiexample
+            ()
+        }
+        
         case ObjectRelevant(concept, ob) => {
             if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
             model.obj(concept).getStructure[Structure.Concept].relatedObjects += ob

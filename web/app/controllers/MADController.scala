@@ -66,6 +66,7 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
             case structure : Structure.Concept => {
                 
                 val examples = structure.examples
+                val antiexamples = structure.antiexamples
                 
                 val representations = for {
                     (name, repr) <- structure.relatedObjects.map{ case ref => ref -> model.obj(ref)}
@@ -80,7 +81,11 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
                 
                 val machines = allMachines.filter(!_._2.isEmpty)
                 
-                views.html.helpers.concept(Seq(("Examples", examples), ("Representations", representations)) ++ machines)
+                views.html.helpers.concept(Seq(
+                    ("Examples", examples),
+                    ("Antiexamples", antiexamples),
+                    ("Representations", representations)
+                ) ++ machines)
             }
         } else html""
         

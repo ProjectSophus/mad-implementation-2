@@ -9,8 +9,12 @@ abstract sealed class Structure {
 }
 
 object Structure {
-    case class Concept (relatedObjects : collection.mutable.Buffer[String] = collection.mutable.Buffer(), examples : collection.mutable.Buffer[String] = collection.mutable.Buffer()) extends Structure {
-        def toStructure = immutable.Structure.Concept(relatedObjects.toSeq, examples.toSeq)
+    case class Concept (
+        relatedObjects : collection.mutable.Buffer[String] = collection.mutable.Buffer(),
+        examples : collection.mutable.Buffer[String] = collection.mutable.Buffer(),
+        antiexamples : collection.mutable.Buffer[String] = collection.mutable.Buffer()
+    ) extends Structure {
+        def toStructure = immutable.Structure.Concept(relatedObjects.toSeq, examples.toSeq, antiexamples.toSeq)
     }
     
     case class Machine (domain : ConceptRef, codomain : ConceptRef) extends Structure {

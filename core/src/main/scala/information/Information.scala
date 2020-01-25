@@ -13,6 +13,7 @@ object Information {
     case class IsRepresentation(name : String) extends Information(f"The object $name is a representation")
     
     case class IsExampleOf(concept : String, example : String) extends Information(f"The object $example is an example of $concept")
+    case class IsAntiexampleOf(concept : String, antiexample : String) extends Information(f"The object $antiexample is an anti-example of $concept")
     
     case class ObjectRelevant(concept : String, ob : String) extends Information(f"The object $ob is relevant to $concept")
     
