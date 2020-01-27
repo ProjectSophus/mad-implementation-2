@@ -2,7 +2,7 @@
 Sealed Concept Rings;
 
 Template Ring [R is Concept] {
-    Example <R> Rings;
+    Example Rings <R>;
     
     Operation on <R> {Addition, Multiplication};
     Function on <R> Inversion
@@ -11,4 +11,4 @@ Template Ring [R is Concept] {
 };
 
 Concept {Integers, Polynomials};
-UseTemplate Ring {Integers, Polynomials};
+UseTemplate Ring {[Integers], [Polynomials]};

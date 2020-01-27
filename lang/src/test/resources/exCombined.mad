@@ -2,7 +2,7 @@
 Sealed Concept Rings;
 
 Template Ring [R is Concept] {
-    Example <R> Rings;
+    Example Rings <R>;
     
     Operation on <R> {Addition, Multiplication};
     Function on <R> Inversion
@@ -13,10 +13,10 @@ Template Ring [R is Concept] {
 Concept Polynomials[C :: Rings];
 
 Extend Template Ring [R is Concept] {
-    UseTemplate Ring Polynomials[<R>];
+    UseTemplate Ring [Polynomials[<R>]];
 };
 
 Concept Integers;
-UseTemplate Ring Integers;
+UseTemplate Ring [Integers];
 
 // Does this cause infinite loop?
