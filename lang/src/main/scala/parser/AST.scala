@@ -20,6 +20,8 @@ object AST {
     case class IsExample(conc : Seq[Object], obj : Seq[Object]) extends Declaration
     case class IsAntiexample(conc : Seq[Object], obj : Seq[Object]) extends Declaration
     case class IsRepresentation(conc : Seq[Object], rep : Seq[Object]) extends Declaration
+    case class IsRelevant(obj : Seq[Object], to : Seq[Object]) extends Declaration
+    case class HasDescription(obj : Seq[Object], desc : String) extends Declaration
     case class IsMachineTypeOn(machinetype : MachineType, conc : Seq[Object], machine : Seq[Object]) extends Declaration
     case class IsMachine(domain : Seq[Object], codomain : Seq[Object], machine : Seq[Object]) extends Declaration
     
@@ -30,6 +32,8 @@ object AST {
         case IsExample(conc, obj) => for (sconc <- conc; sobj <- obj) yield IsExample(Seq(sconc), Seq(sobj))
         case IsAntiexample(conc, obj) => for (sconc <- conc; sobj <- obj) yield IsAntiexample(Seq(sconc), Seq(sobj))
         case IsRepresentation(conc, rep) => for (sconc <- conc; srep <- rep) yield IsRepresentation(Seq(sconc), Seq(srep))
+        case IsRelevant(obj, to) => for (sobj <- obj; sto <- to) yield IsRelevant(Seq(sobj), Seq(sto))
+        case HasDescription(obj, desc) => for (sobj <- obj) yield HasDescription(Seq(sobj), desc)
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
     }

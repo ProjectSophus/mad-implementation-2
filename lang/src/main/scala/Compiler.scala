@@ -38,6 +38,14 @@ object Compiler {
                 Inf.ObjectRelevant(conc, rep)
             )
             
+            case IsRelevant(Seq(Object(obj)), Seq(Object(to))) => Seq(
+                Inf.ObjectRelevant(to, obj) // TODO: Switch?
+            )
+            
+            case HasDescription(Seq(Object(obj)), desc) => Seq(
+                Inf.Description(obj, desc)
+            )
+            
             case IsMachineTypeOn(mt, Seq(Object(conc)), Seq(Object(machine))) => {
                 
                 val (domain, codomain) = mt.machinetype.signature.createConceptRefs(ConceptRef.BasicRef(conc))

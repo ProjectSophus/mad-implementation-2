@@ -21,12 +21,17 @@ object Parser extends Parsers {
     
     def module : Parser[AST] = (declaration <~ Semicolon).* ^^ (Module(_ : _*))
     
-    def declaration : Parser[Declaration] = concept | example | antiexample | representation | machinetypeon | machine
+    def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine
     
     def concept : Parser[IsConcept] = Concept ~> objects ^^ {case ob => IsConcept(ob)}
     def example : Parser[IsExample] = Example ~> objects ~ objects ^^ {case ob1 ~ ob2 => IsExample(ob1, ob2)}
     def antiexample : Parser[IsAntiexample] = Antiexample ~> objects ~ objects ^^ {case ob1 ~ ob2 => IsAntiexample(ob1, ob2)}
     def representation : Parser[IsRepresentation] = Representation ~> objects ~ objects ^^ {case ob1 ~ ob2 => IsRepresentation(ob1, ob2)}
+    def relevant : Parser[IsRelevant] = Relevant ~> objects ~ objects ^^ {case ob1 ~ ob2 =>
+    IsRelevant(ob1, ob2)}
+    def description : Parser[HasDescription] = Description ~> objects ~ stringLiteral ^^ {case ob ~ desc =>
+    HasDescription(ob, desc)}
+    
     def machinetypeon : Parser[IsMachineTypeOn] = machinetype ~ objects ~ objects ^^ {case mt ~ ob1 ~ ob2 => IsMachineTypeOn(mt, ob1, ob2)}
     
     def machine : Parser[IsMachine] = (Machine ~> objects <~ DoubleColon) ~ (objectParams <~ Arrow) ~ objectParams ^^ {
@@ -47,5 +52,9 @@ object Parser extends Parsers {
     def objects : Parser[Seq[Object]] = (obj.map(Seq(_))) | (GroupOpen ~> repsep(obj, Separator) <~ GroupClose)
     
     def objectParams : Parser[Seq[Object]] = (obj.map(Seq(_))) | (TupleOpen ~> repsep(obj, Separator) <~ TupleClose)
+    
+    def stringLiteral : Parser[String] = acceptMatch("string literal", {
+        case StringLiteral(str) => str
+    })
     
 }

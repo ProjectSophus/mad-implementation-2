@@ -18,13 +18,15 @@ object Token {
     case object Example extends Keyword("Example")
     case object Antiexample extends Keyword("Antiexample")
     case object Representation extends Keyword("Representation of")
+    case object Relevant extends Keyword("Relevant")
+    case object Description extends Keyword("Description")
     case object Machine extends Keyword("Machine")
     case object Operation extends MachineTypeKeyword("Operation on", MachineType.Operation)
     case object Function extends MachineTypeKeyword("Function on", MachineType.Function)
     case object Relation extends MachineTypeKeyword("Relation on", MachineType.Relation)
     case object Property extends MachineTypeKeyword("Property on", MachineType.Property)
     
-    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Machine, Operation, Function, Relation, Property)
+    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property)
     
     abstract sealed class Punctuation(symbol : String) extends Token(symbol)
     

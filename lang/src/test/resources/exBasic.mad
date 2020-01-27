@@ -16,6 +16,9 @@ Function on "Natural numbers" Factorial;
 Property on Integers {Positive, Negative, Non-positive, Non-negative};
 Property on "Natural numbers" Prime;
 Relation on {"Natural numbers", Integers} {Less-than, Greater-than};
-Relation on "Natural numbers" {Divides};
+Relation on "Natural numbers" Divides;
 
 Machine Power :: (Integers, "Natural numbers") -> Integers;
+Relevant Power Integers;
+
+Description Integers "Whole numbers";
