@@ -10,11 +10,13 @@ Template Ring [R is Concept] {
     Machine IntegerInclusion :: Integers -> <R>
 };
 
-Concept Integers;
-UseTemplate Ring Integers;
-
 Concept Polynomials[C :: Rings];
 
-Foreach (R :: Rings) { UseTemplate Ring Polynomials[R]; };
+Extend Template Ring [R is Concept] {
+    UseTemplate Ring Polynomials[<R>];
+};
+
+Concept Integers;
+UseTemplate Ring Integers;
 
 // Does this cause infinite loop?

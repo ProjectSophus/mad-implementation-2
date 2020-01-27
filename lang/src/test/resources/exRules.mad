@@ -1,0 +1,9 @@
+
+Concept Integers;
+
+Example Integers {0, 1};
+
+Operation on Integers {Addition}
+
+Statement "Commutativity of Integer Addition" "a + b = b + a where a and b are Integers"
+Relevant "Commutativity of Integer Addition" Integers
