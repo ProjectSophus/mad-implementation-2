@@ -1,0 +1,55 @@
+
+Module Algebra.Structures {
+
+    Template Magma [M is Concept, Op is String] {
+        Operation on <M> <Op>;
+    };
+
+    Template Monoid [M is Concept, Op is String] Extends Magma [<M>, <Op>] {
+        
+        Set Mop = $"$M.$Op";
+        
+        Example <M> $"$Mop.Identity Element";
+        
+        Set Asso = $"$Mop.Assosiativity";
+        Statement <Asso> $"$Op(a, $Op(b, c)) = $Op($Op(a, b), c)";
+        Relevant <Asso> {<M>, <Mop>}
+        
+        Set Iden = $"$Mop.Identity Rule";
+        Statement <Iden> $"$Op(Identity, a) = $Op(a, Identity) = a";
+        Relevant <Iden> {<M>, <Mop>};
+    };
+
+    Template Group [M is Concept, Op is String] Extends Monoid [<M>, <Op>] {
+        
+        Function on <M> $"Inverse of $Op";
+        Set InvOp = $"$M.Inverse of $Op";
+        
+        Set Inv = $"$Mop.Inverse Rule";
+        Statement <Inv> $"$Op(a, Inverse(a)) = $Op(Inverse(a), a) = Identity";
+        Relevant <Inv> {<M>, <Mop>, <InvOp>};
+    };
+    
+    Template AbelianGroup [M is Concept, Op is String] Extends Group [<M>, <Op>] {
+        
+        Set Ab = $"$Mop.Commutativity";
+        Statement <Ab> $"$Op(a, b) = $Op(b, a)";
+        Relevant <Ab> {<M>, <Mop>};
+    };
+    
+    
+    Template Ring [M is Concept] Extends AbelianGroup [<M>, "Addition"] And Monoid [<M>, "Multiplication"] {
+        
+        Set Dist = $"$M.Distributivity";
+        Statement <Dist> $"a * (b + c) = a * b + a * c and (a + b) * c = a * c + b * c";
+        Relevant <Dist> {<M>, $"$M.Addition", $"$M.Multiplication"};
+    }
+    
+    Template CommutativeRing [M is Concept] Extends Ring [<M>] {
+        
+        Set Com = $"$M.Multiplication.Commutativity";
+        Statement <Com> $"$a * b = b * a";
+        Relevant <Com> {<M>, $"$M.Multiplication"};
+    };
+
+};
