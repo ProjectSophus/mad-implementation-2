@@ -50,7 +50,7 @@ object Compiler {
                 
                 val (domain, codomain) = mt.machinetype.signature.createConceptRefs(ConceptRef.BasicRef(conc))
                 
-                val macname = f"$machine (on $conc)"
+                val macname = f"$conc.$machine"
                 
                 Seq(
                     Inf.NewObject(macname),
