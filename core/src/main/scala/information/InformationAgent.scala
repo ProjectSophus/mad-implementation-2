@@ -42,13 +42,16 @@ object InformationAgent {
         }
         
         case ObjectRelevant(concept, ob) => {
-            if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
-            model.obj(concept).getStructure[Structure.Concept].relatedObjects += ob
+            model.obj(concept).relatedObjects += ob
             ()
         }
         
         case Description(name : String, description : String) => {
             model.obj(name).description = Some(description)
+        }
+        
+        case IsStatement(obj : String, str : String) => {
+            model.obj(obj).structure = Some(Some(Structure.Statement(str)))
         }
         
     }

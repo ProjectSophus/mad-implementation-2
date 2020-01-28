@@ -97,18 +97,31 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
                 
                 views.html.helpers.machine(domain.toString, codomain.toString)
             }
+            case structure : Structure.Statement => {
+                
+                val statement = structure.str
+                
+                views.html.helpers.statement(statement)
+            }
             case structure : Structure.Concept => {
+                
+                val relatedObjects = obj.relatedObjects
                 
                 val examples = structure.examples
                 val antiexamples = structure.antiexamples
                 
                 val representations = for {
-                    (name, repr) <- structure.relatedObjects.map{ case ref => ref -> model.obj(ref)}
+                    (name, repr) <- relatedObjects.map{ case ref => ref -> model.obj(ref)}
                     if repr.hasStructure[Structure.Representation]
+                } yield name
+                
+                val statements = for {
+                    (name, repr) <- relatedObjects.map{ case ref => ref -> model.obj(ref)}
+                    if repr.hasStructure[Structure.Statement]
                 } yield name
                     
                 val allMachines = for {machinetype <- MachineType.machineTypes} yield machinetype.plural -> (for {
-                    (muid, machine) <- structure.relatedObjects.map{ case ref => ref -> model.obj(ref)}
+                    (muid, machine) <- relatedObjects.map{ case ref => ref -> model.obj(ref)}
                     if machine.hasStructure[Structure.Machine]
                     if Signature(machine.getStructure[Structure.Machine], machinetype.signature, ConceptRef.BasicRef(uid))
                 } yield muid).toSeq
@@ -118,7 +131,8 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
                 views.html.helpers.concept(Seq(
                     ("Examples", examples),
                     ("Antiexamples", antiexamples),
-                    ("Representations", representations)
+                    ("Representations", representations),
+                    ("Statements", statements)
                 ) ++ machines)
             }
         } else html""

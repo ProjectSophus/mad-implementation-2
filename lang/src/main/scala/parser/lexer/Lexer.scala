@@ -23,7 +23,7 @@ object Lexer extends RegexParsers {
     
     def fixedToken : Parser[Token] = fixedTokens.map(token => token.str ^^^ token).reduceLeft(_ | _)
     
-    def identifier : Parser[Token] = """[A-Za-z0-9\-_]+""".r ^^ (new Identifier(_))
+    def identifier : Parser[Token] = """[A-Za-z0-9\-_\.]+""".r ^^ (new Identifier(_))
     
     def stringLiteral : Parser[Token] = """"((?:\\"|(?:(?!").))*)"""".r ^^ {case t => StringLiteral(t.drop(1).dropRight(1))}
     

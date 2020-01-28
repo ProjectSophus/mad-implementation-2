@@ -24,6 +24,7 @@ object AST {
     case class HasDescription(obj : Seq[Object], desc : String) extends Declaration
     case class IsMachineTypeOn(machinetype : MachineType, conc : Seq[Object], machine : Seq[Object]) extends Declaration
     case class IsMachine(domain : Seq[Object], codomain : Seq[Object], machine : Seq[Object]) extends Declaration
+    case class IsStatement(obj : Object, str : String) extends Declaration
     
     case class Object(name : String)
     
@@ -36,6 +37,7 @@ object AST {
         case HasDescription(obj, desc) => for (sobj <- obj) yield HasDescription(Seq(sobj), desc)
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
+        case x : IsStatement => Seq(x)
     }
     
 }

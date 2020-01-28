@@ -21,7 +21,7 @@ object Parser extends Parsers {
     
     def module : Parser[AST] = NewLine.* ~> (declaration <~ NewLine.+).* ^^ (Module(_ : _*))
     
-    def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine
+    def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement
     
     def concept : Parser[IsConcept] = Concept ~> objects ^^ {case ob => IsConcept(ob)}
     def example : Parser[IsExample] = Example ~> objects ~ objects ^^ {case ob1 ~ ob2 => IsExample(ob1, ob2)}
@@ -38,6 +38,7 @@ object Parser extends Parsers {
         case ob ~ param1 ~ param2 => IsMachine(param1, param2, ob)
     }
     
+    def statement : Parser[IsStatement] = Statement ~> obj ~ stringLiteral ^^ {case ob ~ str => IsStatement(ob, str)}
     
     def machinetype : Parser[MachineType] = acceptMatch("machinetype", {
         case x : MachineTypeKeyword => x.machinetype

@@ -22,3 +22,6 @@ Machine Power :: (Integers, "Natural numbers") -> Integers
 Relevant Power Integers
 
 Description Integers "Whole \n numbers"
+
+Statement "Integers.Addition.Commutativity" "a + b = b + a"
+Relevant "Integers.Addition.Commutativity" {Integers, Integers.Addition}

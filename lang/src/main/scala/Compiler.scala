@@ -75,6 +75,11 @@ object Compiler {
                 )
             }
             
+            case IsStatement(Object(obj), str) => Seq(
+                Inf.NewObject(obj, okayIfExists = true),
+                Inf.IsStatement(obj, str)
+            )
+            
             case x => throw CompilerException(s"Don't know what to do with $declaration")
         }
         
