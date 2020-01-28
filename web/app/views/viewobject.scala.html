@@ -1,11 +1,11 @@
 @import io.github.ProjectSophus.mad._
 @import model.immutable._
 
-@(machine : Object, extra : Html)
+@(obj : Object, extra : Html)
 
 @main("MAD Object") {
-  <h3>@machine.name</h3>
-  @for(desc <- machine.description) {
+  <h3>@obj.name</h3>
+  @for(desc <- obj.description) {
       <h4>Description:</h4>
       <p>@desc</p>
   }
