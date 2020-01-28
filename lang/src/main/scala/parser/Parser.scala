@@ -19,7 +19,7 @@ object Parser extends Parsers {
         case Error(msg, next) => throw ParserException(msg, next.pos)
     }
     
-    def module : Parser[AST] = (declaration <~ Semicolon).* ^^ (Module(_ : _*))
+    def module : Parser[AST] = NewLine.* ~> (declaration <~ NewLine.+).* ^^ (Module(_ : _*))
     
     def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine
     

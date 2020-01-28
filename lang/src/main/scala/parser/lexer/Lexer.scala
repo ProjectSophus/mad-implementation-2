@@ -6,6 +6,8 @@ import scala.util.parsing.combinator._
 object Lexer extends RegexParsers {
     import Token._
     
+    override val whiteSpace = """[ \t]+""".r
+    
     @throws[LexerException]("if there is a lexing error or no parse")
     def getTokens(data : String) : Seq[Token] = parseAll(total, data) match {
         case Success(result, _) => result.filter{
@@ -28,5 +30,7 @@ object Lexer extends RegexParsers {
     def singlelinecomment : Parser[Token] = """\/\/.*\r?\n""".r ^^ (Comment(_))
     def multilinecomment : Parser[Token] = """\/\*((?!\*\/).|\r?\n)*\*\/""".r ^^ (Comment(_))
     
-    def total : Parser[Seq[Token]] = positioned(multilinecomment | singlelinecomment | fixedToken | stringLiteral | identifier).*
+    def newline : Parser[Token] = "\n" ^^^ NewLine
+    
+    def total : Parser[Seq[Token]] = positioned(newline | multilinecomment | singlelinecomment | fixedToken | stringLiteral | identifier).*
 }

@@ -9,6 +9,7 @@ abstract sealed class Token(val str : String) extends Positional
 object Token {
     
     case object EndToken extends Token("")
+    case object NewLine extends Token("\n")
     
     abstract sealed class Keyword(keyword : String) extends Token(keyword)
     
@@ -30,7 +31,6 @@ object Token {
     
     abstract sealed class Punctuation(symbol : String) extends Token(symbol)
     
-    case object Semicolon extends Punctuation(";")
     case object DoubleColon extends Punctuation("::")
     case object Arrow extends Punctuation("->")
     case object TupleOpen extends Punctuation("(")
@@ -39,7 +39,7 @@ object Token {
     case object GroupClose extends Punctuation("}")
     case object Separator extends Punctuation(",")
     
-    val punctuation : Seq[Punctuation] = Seq(Semicolon, DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, Separator)
+    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, Separator)
     
     case class Comment(content : String) extends Token("/* " + content + " */")
     
