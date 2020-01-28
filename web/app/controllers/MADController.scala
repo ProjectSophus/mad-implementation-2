@@ -90,7 +90,13 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
         
         val extra : Html = if(obj.hasStructure[Structure]) obj.getStructure[Structure] match {
             case structure : Structure.Representation => html"This is a representation"
-            case structure : Structure.Machine => html"This is a machine"
+            case structure : Structure.Machine => {
+                
+                val domain = structure.domain
+                val codomain = structure.codomain
+                
+                views.html.helpers.machine(domain.toString, codomain.toString)
+            }
             case structure : Structure.Concept => {
                 
                 val examples = structure.examples
