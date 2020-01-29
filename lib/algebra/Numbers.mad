@@ -1,0 +1,28 @@
+
+module Algebra.Numbers {
+    
+    Using Algebra.Structures
+    
+    Concept {Z, Q, Qbar, R, C}
+    UseTemplate Ring {[Z], [Q], [Qbar], [R], [C]}
+    
+    Set Zex = {-2, -1, 0, 1, 2}
+    Set Qex = {"1/2", "3/4", "-7/8"}
+    Set Qbarex = {"sqrt(2)", "golden ratio"}
+    Set Rex = {pi, e}
+    Set Cex = {"i", "-i", "2 + 3i", "5 - 4i", "2e^(3/4 pi i)"}
+    Set Noex = {potato, cucumber}
+    
+    Example Z <Zex>
+    Example Q <Zex U Qex>
+    Example Qbar <Zex U Qex U Qbarex U Cex>
+    Example R <Zex U Qex U Qbarex U Rex>
+    Example C <Zex U Qex U Qbarex U Rex U Cex>
+    
+    Antiexample Z <Qex U Qbarex U Rex U Cex U Noex>
+    Antiexample Q <Qbarex U Rex U Cex U Noex>
+    Antiexample Qbar <Rex U Noex>
+    Antiexample R <Cex U Noex>
+    Antiexample C <Noex>
+    
+}
