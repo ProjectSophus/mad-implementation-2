@@ -1,11 +1,16 @@
 
 Module Algebra.Structures {
 
+    Concept {Magmas, Monoids, Groups, "Abelian Groups", Rings, "Commutative Rings"}
+
     Template Magma [M is Concept, Op is String] {
+        Example Magmas <M>
+        
         Operation on <M> <Op>
     }
 
     Template Monoid [M is Concept, Op is String] Extends Magma [<M>, <Op>] {
+        Example Monoids <M>
         
         Set Mop = $"$M.$Op"
         
@@ -21,6 +26,7 @@ Module Algebra.Structures {
     }
 
     Template Group [M is Concept, Op is String] Extends Monoid [<M>, <Op>] {
+        Example Groups <M>
         
         Function on <M> $"Inverse of $Op"
         Set InvOp = $"$M.Inverse of $Op"
@@ -31,6 +37,7 @@ Module Algebra.Structures {
     }
     
     Template AbelianGroup [M is Concept, Op is String] Extends Group [<M>, <Op>] {
+        Example "Abelian Groups" <M>
         
         Set Ab = $"$Mop.Commutativity"
         Statement <Ab> $"$Op(a, b) = $Op(b, a)"
@@ -39,6 +46,7 @@ Module Algebra.Structures {
     
     
     Template Ring [M is Concept] Extends AbelianGroup [<M>, "Addition"] And Monoid [<M>, "Multiplication"] {
+        Example Rings <M>
         
         Set Dist = $"$M.Distributivity"
         Statement <Dist> $"a * (b + c) = a * b + a * c and (a + b) * c = a * c + b * c"
@@ -46,6 +54,7 @@ Module Algebra.Structures {
     }
     
     Template CommutativeRing [M is Concept] Extends Ring [<M>] {
+        Example "Commutative Rings" <M>
         
         Set Com = $"$M.Multiplication.Commutativity"
         Statement <Com> $"$a * b = b * a"
