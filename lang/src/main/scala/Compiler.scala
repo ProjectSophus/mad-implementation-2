@@ -27,7 +27,18 @@ object Compiler {
     object ExtractExpression {
         def unapply(obj : Expression)(implicit scope : Scope) : Option[String] = Some(obj match {
             case ConcreteExpression(str) => str
-            case VariableExpression(str) => scope.variables.getOrElse(str, throw CompilerException(s"Variable not found: $str"))
+            case VariableExpression(varname) => scope.variables.getOrElse(varname, throw CompilerException(s"Variable not found: $varname"))
+            case InterpolationExpression(str) => {
+                import interpolation._
+                import Interpolation._
+                
+                val Interpolation(data) = getInterpolation(str)
+                
+                data.map{
+                    case InterpolationRaw(raw) => raw
+                    case InterpolationVariable(varname) => scope.variables.getOrElse(varname, throw CompilerException(s"Variable in interpolation not found: $varname"))
+                }.mkString
+            }
         })
     }
     

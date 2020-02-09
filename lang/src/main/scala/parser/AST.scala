@@ -35,6 +35,7 @@ object AST {
     sealed abstract class Expression
     case class ConcreteExpression(name : String) extends Expression
     case class VariableExpression(varname : String) extends Expression
+    case class InterpolationExpression(string : String) extends Expression
     
     def expandCommand (command : Command) : Seq[Command] = command match {
         case IsConcept(obj) => for (sobj <- obj) yield IsConcept(Seq(sobj))

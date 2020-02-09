@@ -45,8 +45,9 @@ object Token {
     case object ParamOpen extends Punctuation("[")
     case object ParamClose extends Punctuation("]")
     case object Separator extends Punctuation(",")
+    case object Dollar extends Punctuation("$")
     
-    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, VarOpen, VarClose, ParamOpen, ParamClose, Separator)
+    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, VarOpen, VarClose, ParamOpen, ParamClose, Separator, Dollar)
     
     case class Comment(content : String) extends Token("/* " + content + " */")
     

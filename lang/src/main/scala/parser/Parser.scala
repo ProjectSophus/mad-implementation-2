@@ -43,7 +43,7 @@ object Parser extends Parsers {
     
     def statement : Parser[IsStatement] = Statement ~> expression ~ stringLiteral ^^ {case ob ~ str => IsStatement(ob, str)}
     
-    def template : Parser[CreateTemplate] = (Template ~> string ~ templateParamsDec) ~ (GroupOpen ~> code <~ GroupClose) ^^ {
+    def template : Parser[CreateTemplate] = (Template ~> stringOrIdentifier ~ templateParamsDec) ~ (GroupOpen ~> code <~ GroupClose) ^^ {
         case name ~ params ~ code => CreateTemplate(name, params, code)
     }
     
@@ -59,26 +59,31 @@ object Parser extends Parsers {
     
     def templateParams : Parser[Seq[Expression]] = ParamOpen ~> repsep(expression, Separator) <~ ParamClose
     
-    def templateParamsDec : Parser[Seq[String]] = ParamOpen ~> rep1sep(string, Separator) <~ ParamClose
+    def templateParamsDec : Parser[Seq[String]] = ParamOpen ~> rep1sep(stringOrIdentifier, Separator) <~ ParamClose
     
     
-    def expression : Parser[Expression] = variableExpression | concreteExpression
+    def expression : Parser[Expression] = variableExpression | concreteExpression | interpolationExpression
     
-    def concreteExpression : Parser[ConcreteExpression] = string.map(ConcreteExpression(_))
-    
-    def string : Parser[String] = acceptMatch("string or identifier", {
-        case Identifier(str) => str
-        case StringLiteral(str) => str
-    })
+    def concreteExpression : Parser[ConcreteExpression] = stringOrIdentifier.map(ConcreteExpression(_))
     
     def variableExpression : Parser[VariableExpression] = VarOpen ~> acceptMatch("variable name", {case Identifier(str) => VariableExpression(str)}) <~ VarClose
     
+    def interpolationExpression : Parser[InterpolationExpression] = Dollar ~> stringLiteral ^^ {case str => InterpolationExpression(str)}
+    
+    
     def expressions : Parser[Seq[Expression]] = (expression.map(Seq(_))) | (GroupOpen ~> repsep(expression, Separator) <~ GroupClose)
+    
     
     def machineParam : Parser[Seq[Expression]] = (expression.map(Seq(_))) | (TupleOpen ~> repsep(expression, Separator) <~ TupleClose)
     
     def stringLiteral : Parser[String] = acceptMatch("string literal", {
         case StringLiteral(str) => str
     })
+    
+    def stringOrIdentifier : Parser[String] = acceptMatch("string or identifier", {
+        case Identifier(str) => str
+        case StringLiteral(str) => str
+    })
+    
     
 }
