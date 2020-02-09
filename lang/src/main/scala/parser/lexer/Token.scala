@@ -27,8 +27,10 @@ object Token {
     case object Relation extends MachineTypeKeyword("Relation on", MachineType.Relation)
     case object Property extends MachineTypeKeyword("Property on", MachineType.Property)
     case object Statement extends Keyword("Statement")
+    case object Template extends Keyword("Template")
+    case object UseTemplate extends Keyword("UseTemplate")
     
-    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property, Statement)
+    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property, Statement, Template, UseTemplate)
     
     abstract sealed class Punctuation(symbol : String) extends Token(symbol)
     
@@ -38,9 +40,13 @@ object Token {
     case object TupleClose extends Punctuation(")")
     case object GroupOpen extends Punctuation("{")
     case object GroupClose extends Punctuation("}")
+    case object VarOpen extends Punctuation("<")
+    case object VarClose extends Punctuation(">")
+    case object ParamOpen extends Punctuation("[")
+    case object ParamClose extends Punctuation("]")
     case object Separator extends Punctuation(",")
     
-    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, Separator)
+    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, VarOpen, VarClose, ParamOpen, ParamClose, Separator)
     
     case class Comment(content : String) extends Token("/* " + content + " */")
     
