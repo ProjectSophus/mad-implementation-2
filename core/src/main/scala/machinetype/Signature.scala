@@ -22,7 +22,7 @@ object Signature {
     }
     
     case object T extends ConceptPattern { def createConceptRef(t : ConceptRef) = t }
-    case object BOOL extends ConceptPattern { def createConceptRef(t : ConceptRef) = ConceptRef.BasicRef("BOOL") }
+    case object BOOL extends ConceptPattern { def createConceptRef(t : ConceptRef) = ConceptRef.BasicRef("Booleans") }
     
     case class PatternProduct (left : ConceptPattern, right : ConceptPattern) extends ConceptPattern {
         def createConceptRef(t : ConceptRef) = ConceptRef.CartesianProduct(left.createConceptRef(t), right.createConceptRef(t))
