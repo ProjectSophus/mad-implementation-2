@@ -7,7 +7,9 @@ Template Ring [R] {
     Operation on <R> {Addition, Multiplication}
     Function on <R> Inversion
     
-    Machine $"$R.IntegerInclusion" :: Integers -> <R>
+    Set Inclusion = $"$R.IntegerInclusion"
+    
+    Machine <Inclusion> :: Integers -> <R>
 }
 
 Concept {Integers, Polynomials}
