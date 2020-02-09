@@ -49,7 +49,7 @@ object Parser extends Parsers {
     
     def useTemplate : Parser[AST.UseTemplate] = Token.UseTemplate ~> expressions ~ templateParamsGroup ^^ {case exp ~ params => AST.UseTemplate(exp, params)}
     
-    def setVariable : Parser[SetVariable] = (Set ~> stringOrIdentifier) ~ (Equals ~> expression) ^^ {case varname ~ exp => SetVariable(varname, exp)}
+    def setVariable : Parser[SetVariable] = stringOrIdentifier ~ (Equals ~> expression) ^^ {case varname ~ exp => SetVariable(varname, exp)}
     
     
     def machinetype : Parser[MachineType] = acceptMatch("machinetype", {

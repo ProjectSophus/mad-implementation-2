@@ -29,9 +29,8 @@ object Token {
     case object Statement extends Keyword("Statement")
     case object Template extends Keyword("Template")
     case object UseTemplate extends Keyword("UseTemplate")
-    case object Set extends Keyword("Set")
     
-    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property, Statement, Template, UseTemplate, Set)
+    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property, Statement, Template, UseTemplate)
     
     abstract sealed class Punctuation(symbol : String) extends Token(symbol)
     
