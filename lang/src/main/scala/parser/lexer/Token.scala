@@ -29,8 +29,9 @@ object Token {
     case object Statement extends Keyword("Statement")
     case object Template extends Keyword("Template")
     case object UseTemplate extends Keyword("UseTemplate")
+    case object Set extends Keyword("Set")
     
-    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property, Statement, Template, UseTemplate)
+    val keywords : Seq[Keyword] = Seq(Concept, Example, Antiexample, Representation, Relevant, Description, Machine, Operation, Function, Relation, Property, Statement, Template, UseTemplate, Set)
     
     abstract sealed class Punctuation(symbol : String) extends Token(symbol)
     
@@ -46,8 +47,9 @@ object Token {
     case object ParamClose extends Punctuation("]")
     case object Separator extends Punctuation(",")
     case object Dollar extends Punctuation("$")
+    case object Equals extends Punctuation("=")
     
-    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, VarOpen, VarClose, ParamOpen, ParamClose, Separator, Dollar)
+    val punctuation : Seq[Punctuation] = Seq(DoubleColon, Arrow, TupleOpen, TupleClose, GroupOpen, GroupClose, VarOpen, VarClose, ParamOpen, ParamClose, Separator, Dollar, Equals)
     
     case class Comment(content : String) extends Token("/* " + content + " */")
     

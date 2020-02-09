@@ -32,6 +32,8 @@ object AST {
     
     case class UseTemplate(name : Seq[Expression], params : Seq[Seq[Expression]]) extends Command
     
+    case class SetVariable(varname : String, newValue : Expression) extends Command
+    
     sealed abstract class Expression
     case class ConcreteExpression(name : String) extends Expression
     case class VariableExpression(varname : String) extends Expression
@@ -46,7 +48,7 @@ object AST {
         case HasDescription(obj, desc) => for (sobj <- obj) yield HasDescription(Seq(sobj), desc)
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
-        case _ : IsStatement | _ : CreateTemplate => Seq(command)
+        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable => Seq(command)
         case UseTemplate(name, params) => for {sname <- name; sparams <- params} yield UseTemplate(Seq(sname), Seq(sparams))
     }
     
