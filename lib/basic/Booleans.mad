@@ -1,0 +1,42 @@
+
+Module Basic.Booleans {
+    
+    Concept Booleans
+    
+    Example Booleans {True, False}
+    
+    Function on Booleans Not
+    
+    MachineExample Not (True) -> (False)
+    MachineExample Not (False) -> (True)
+    
+    Operation on Booleans And
+    
+    MachineExample And (True, True) -> (True)
+    MachineExample And (True, False) -> (False)
+    MachineExample And (False, True) -> (False)
+    MachineExample And (False, False) -> (False)
+    
+    Operation on Booleans Or
+    
+    MachineExample Or (True, True) -> (True)
+    MachineExample Or (True, False) -> (True)
+    MachineExample Or (False, True) -> (True)
+    MachineExample Or (False, False) -> (False)
+    
+    Operation on Booleans Xor
+    
+    MachineExample Or (True, True) -> (False)
+    MachineExample Or (True, False) -> (True)
+    MachineExample Or (False, True) -> (True)
+    MachineExample Or (False, False) -> (False)
+    
+    Operation on Booleans Nor
+    
+    Composition Nor (\x, \y) = Not(Or(\x, \y))
+    
+    Operation on Booleans Nand
+    
+    Composition Nand (\x, \y) = Not(And(\x, \y))
+    
+}
