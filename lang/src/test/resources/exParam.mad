@@ -5,6 +5,8 @@ Concept AbelianGroups
 Example Rings Integers
 Example Rings Rationals
 
+// IDEA! Use templates for this, templates that create a concept
+
 Concept Modules[R :: Rings]
 
 Machine ZModIsAb :: Modules[Integers] -> AbelianGroups

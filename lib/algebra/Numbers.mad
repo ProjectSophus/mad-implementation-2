@@ -1,28 +1,30 @@
 
-module Algebra.Numbers {
+Module Algebra.Numbers {
     
     Using Algebra.Structures
     
     Concept {Z, Q, Qbar, R, C}
     UseTemplate Ring {[Z], [Q], [Qbar], [R], [C]}
     
-    Set Zex = {-2, -1, 0, 1, 2}
-    Set Qex = {"1/2", "3/4", "-7/8"}
-    Set Qbarex = {"sqrt(2)", "golden ratio"}
-    Set Rex = {pi, e}
-    Set Cex = {"i", "-i", "2 + 3i", "5 - 4i", "2e^(3/4 pi i)"}
-    Set Noex = {potato, cucumber}
+    Generalization Q Z
+    Generalization Qbar Q
+    Generalization R Q
+    Generalization C R
+    Generalization C Qbar
     
-    Example Z <Zex>
-    Example Q <Zex U Qex>
-    Example Qbar <Zex U Qex U Qbarex U Cex>
-    Example R <Zex U Qex U Qbarex U Rex>
-    Example C <Zex U Qex U Qbarex U Rex U Cex>
+    Antiexample C {potato, cucumber}
+    Example Z {-1, 0, 1}
+    Example -AntiexampleForSpecialization Q {"1/2", "0.434", "-5.5"}
+    Example -AntiexampleForSpecialization Qbar {"sqrt(2)", "golden ratio", "i", "2i + 3", "2e^(3/4 pi i)"}
+    Example -AntiexampleForSpecialization R {pi, e}
+    Example -AntiexampleForSpecialization C {"i*pi + 3", "e^i"}
     
-    Antiexample Z <Qex U Qbarex U Rex U Cex U Noex>
-    Antiexample Q <Qbarex U Rex U Cex U Noex>
-    Antiexample Qbar <Rex U Noex>
-    Antiexample R <Cex U Noex>
-    Antiexample C <Noex>
+    Representation {Decimal, Binary, Hexadecimal} {Z, Q, R}
+    Representation {Cartesian, Polar} {Qbar, C}
+    Representation "Factorized Form" {Z, Q}
+    Representation "As zero of polynomial in an interval" {Qbar, R, C}
+    
+    Relation on {Z, Q, R} {"Less-than", "Greater-than", "Less-than or equal", "Greater than or equal"}
+    
     
 }
