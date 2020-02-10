@@ -27,4 +27,8 @@ class CompilerTest extends FunSuite {
         compile("/exRules.mad")
     }
     
+    test ("Compiling exTemplate.mad") {
+        compile("/exTemplate.mad")
+    }
+    
 }
