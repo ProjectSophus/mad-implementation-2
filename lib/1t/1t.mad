@@ -1,0 +1,21 @@
+
+Module 1t {
+    
+    Concept {Utrykk, Heltall, "Rasjonale tall", "Reelle tall", Polynom, "Rasjonale utrykk", "Analytiske utrykk"}
+    
+    Generalization "Rasjonale tall" Heltall
+    Generalization "Reelle tall" "Rasjonale tall"
+    Generalization Polynom "Reelle tall"
+    Generalization "Rasjonale utrykk" Polynom
+    Generalization "Analytiske utrykk" "Rasjonale utrykk"
+    Generalization Utrykk "Analytiske utrykk"
+    
+    Antiexample Utrykk {"Relle tall.Kvadratrot", "Heltall.Mindre-enn"}
+    Example Heltall {-10, 2, 7}
+    Example -AntiexampleForSpecialization "Rasjonale tall" {"1/2", "3/4", "5.67"}
+    Example -AntiexampleForSpecialization "Relle tall" {pi, e, "sqrt(2)"}
+    Example -AntiexampleForSpecialization Polynom {"x", "x + 1", "x^3 - 2x + pi"}
+    Example -AntiexampleForSpecialization "Rasjonale utrykk" {"1/x", "1/(x^2 + 3)", "1 + (x + 1)/(x - 1)"}
+    Example -AntiexampleForSpecialization "Analytiske utykk" {"log(x)", "e^x", "log(x + e^(4x - sqrt(3)))"}
+    Example -AntiexampleForSpecialization Utrykk {"|x|", "|x^2 - 1|"}
+}
