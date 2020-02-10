@@ -17,6 +17,8 @@ object AST {
     abstract sealed class Declaration extends Command
     
     
+    case class Module(name : String, code : ScopedCode) extends Command
+    
     case class IsConcept(obj : Seq[Expression]) extends Declaration
     case class IsExample(conc : Seq[Expression], obj : Seq[Expression]) extends Declaration
     case class IsAntiexample(conc : Seq[Expression], obj : Seq[Expression]) extends Declaration
@@ -48,7 +50,7 @@ object AST {
         case HasDescription(obj, desc) => for (sobj <- obj) yield HasDescription(Seq(sobj), desc)
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
-        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable => Seq(command)
+        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable | _ : Module => Seq(command)
         case UseTemplate(name, params) => for {sname <- name; sparams <- params} yield UseTemplate(Seq(sname), Seq(sparams))
     }
     

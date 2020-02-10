@@ -22,7 +22,7 @@ object Parser extends Parsers {
     def ast : Parser[AST] = code
     def code : Parser[ScopedCode] = NewLine.* ~> (command <~ NewLine.+).* ^^ (ScopedCode(_))
     
-    def command : Parser[Command] = declaration | template | useTemplate | setVariable
+    def command : Parser[Command] = declaration | template | useTemplate | setVariable | module
     
     def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement
     
@@ -50,6 +50,10 @@ object Parser extends Parsers {
     def useTemplate : Parser[AST.UseTemplate] = Token.UseTemplate ~> expressions ~ templateParamsGroup ^^ {case exp ~ params => AST.UseTemplate(exp, params)}
     
     def setVariable : Parser[SetVariable] = stringOrIdentifier ~ (Equals ~> expression) ^^ {case varname ~ exp => SetVariable(varname, exp)}
+    
+    def module : Parser[AST.Module] = Token.Module ~> stringOrIdentifier ~ (GroupOpen ~> code <~ GroupClose) ^^ {
+        case name ~ ast => AST.Module(name, ast)
+    }
     
     
     def machinetype : Parser[MachineType] = acceptMatch("machinetype", {

@@ -1,16 +1,20 @@
 
-Concept Rings
+Module Algebra.Rings {
 
-Template Ring [R] {
-    Example Rings <R>
-    
-    Operation on <R> {Addition, Multiplication}
-    Function on <R> Inversion
-    
-    Inclusion = $"$R.IntegerInclusion"
-    
-    Machine <Inclusion> :: Integers -> <R>
+    Concept Rings
+
+    Template Ring [R] {
+        Example Rings <R>
+        
+        Operation on <R> {Addition, Multiplication}
+        Function on <R> Inversion
+        
+        Inclusion = $"$R.IntegerInclusion"
+        
+        Machine <Inclusion> :: Integers -> <R>
+    }
+
+    Concept {Integers, Polynomials}
+    UseTemplate Ring {[Integers], [Polynomials]}
+
 }
-
-Concept {Integers, Polynomials}
-UseTemplate Ring {[Integers], [Polynomials]}

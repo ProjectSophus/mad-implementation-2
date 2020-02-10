@@ -120,6 +120,12 @@ object Compiler {
                 case x => throw CompilerException(s"Don't know what to do with declaration $x")
             }
             
+            case Module(name, ast) => {
+                val newscope = scope.createSubScope()
+                
+                compileASTtoInformation(ast, newscope)
+            }
+            
             case SetVariable(varname, ExtractExpression(exp)) => {
                 scope.variables.put(varname, exp)
                 Seq()
