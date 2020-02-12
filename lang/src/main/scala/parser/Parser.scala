@@ -24,7 +24,7 @@ object Parser extends Parsers {
     
     def command : Parser[Command] = declaration | template | useTemplate | setVariable | module
     
-    def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement
+    def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement | generalization
     
     def concept : Parser[IsConcept] = Concept ~> expressions ^^ {case ob => IsConcept(ob)}
     def example : Parser[IsExample] = Example ~> expressions ~ expressions ^^ {case ob1 ~ ob2 => IsExample(ob1, ob2)}
@@ -42,6 +42,8 @@ object Parser extends Parsers {
     }
     
     def statement : Parser[IsStatement] = Statement ~> expression ~ stringLiteral ^^ {case ob ~ str => IsStatement(ob, str)}
+    
+    def generalization : Parser[IsGeneralization] = Generalization ~> expressions ~ expressions ^^ {case gen ~ spec => IsGeneralization(gen, spec)}
     
     def template : Parser[CreateTemplate] = (Template ~> stringOrIdentifier ~ templateParamsDec) ~ (GroupOpen ~> code <~ GroupClose) ^^ {
         case name ~ params ~ code => CreateTemplate(name, params, code)

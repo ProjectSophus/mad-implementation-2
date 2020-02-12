@@ -117,6 +117,10 @@ object Compiler {
                     Inf.IsStatement(obj, str)
                 )
                 
+                case IsGeneralization(Seq(ExtractExpression(gen)), Seq(ExtractExpression(spec))) => Seq(
+                    Inf.Generalization(gen, spec)
+                )
+                
                 case x => throw CompilerException(s"Don't know what to do with declaration $x")
             }
             

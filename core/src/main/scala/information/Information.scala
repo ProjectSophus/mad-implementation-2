@@ -20,4 +20,6 @@ object Information {
     case class Description(name : String, description : String) extends Information(f"""The object $name has description "$description"""")
     
     case class IsStatement(obj : String, str : String) extends Information(f"""The object $obj is a statement with text "$str"""")
+    
+    case class Generalization(gen : String, spec : String) extends Information(f"""The concept $gen is a generalization of $spec""")
 }

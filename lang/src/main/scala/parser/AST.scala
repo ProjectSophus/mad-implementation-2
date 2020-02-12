@@ -28,7 +28,8 @@ object AST {
     case class IsMachineTypeOn(machinetype : MachineType, conc : Seq[Expression], machine : Seq[Expression]) extends Declaration
     case class IsMachine(domain : Seq[Expression], codomain : Seq[Expression], machine : Seq[Expression]) extends Declaration
     case class IsStatement(obj : Expression, str : String) extends Declaration
-
+    case class IsGeneralization(gen : Seq[Expression], spec : Seq[Expression]) extends Declaration
+    
     
     case class CreateTemplate(name : String, params : Seq[String], code : ScopedCode) extends Command
     
@@ -50,6 +51,7 @@ object AST {
         case HasDescription(obj, desc) => for (sobj <- obj) yield HasDescription(Seq(sobj), desc)
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
+        case IsGeneralization(gen, spec) => for (sgen <- gen; sspec <- spec) yield IsGeneralization(Seq(sgen), Seq(sspec))
         case _ : IsStatement | _ : CreateTemplate | _ : SetVariable | _ : Module => Seq(command)
         case UseTemplate(name, params) => for {sname <- name; sparams <- params} yield UseTemplate(Seq(sname), Seq(sparams))
     }

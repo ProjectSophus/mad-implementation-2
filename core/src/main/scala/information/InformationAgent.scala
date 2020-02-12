@@ -7,6 +7,11 @@ import reference._
 object InformationAgent {
     import Information._
     
+    private def getAsConceptSafe(name : String, model : Model) : Structure.Concept = {
+        if (!model.obj(name).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(name)
+        model.obj(name).getStructure[Structure.Concept]
+    }
+    
     def apply (info : Information, model : Model) : Unit = info match {
         case NewObject(name : String, okayIfExists : Boolean) => {
             if (model.objects.exists(_.name == name)) {
@@ -30,14 +35,12 @@ object InformationAgent {
         }
         
         case IsExampleOf(concept, example) => {
-            if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
-            model.obj(concept).getStructure[Structure.Concept].examples += example
+            getAsConceptSafe(concept, model).examples += example
             ()
         }
         
         case IsAntiexampleOf(concept, antiexample) => {
-            if (!model.obj(concept).hasStructure[Structure.Concept]) throw MADException.RefNotAConcept(concept)
-            model.obj(concept).getStructure[Structure.Concept].antiexamples += antiexample
+            getAsConceptSafe(concept, model).antiexamples += antiexample
             ()
         }
         
@@ -52,6 +55,14 @@ object InformationAgent {
         
         case IsStatement(obj : String, str : String) => {
             model.obj(obj).structure = Some(Some(Structure.Statement(str)))
+        }
+        
+        case Generalization(gen, spec) => {
+            val genc = getAsConceptSafe(gen, model)
+            val specc = getAsConceptSafe(spec, model)
+            
+            specc.generalizations += gen
+            genc.specializations += spec
         }
         
     }

@@ -110,6 +110,9 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
                 val examples = structure.examples
                 val antiexamples = structure.antiexamples
                 
+                val generalizations = structure.generalizations
+                val specializations = structure.specializations
+                
                 val representations = for {
                     (name, repr) <- relatedObjects.map{ case ref => ref -> model.obj(ref)}
                     if repr.hasStructure[Structure.Representation]
@@ -132,7 +135,9 @@ class MADController @Inject()(cc: ControllerComponents) extends AbstractControll
                     ("Examples", examples),
                     ("Antiexamples", antiexamples),
                     ("Representations", representations),
-                    ("Statements", statements)
+                    ("Statements", statements),
+                    ("Generalizations", generalizations),
+                    ("Specializations", specializations)
                 ) ++ machines)
             }
         } else html""
