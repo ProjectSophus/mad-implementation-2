@@ -45,7 +45,7 @@ Module Algebra.Structures {
     }
     
     
-    Template Ring [M] Extends AbelianGroup [<M>, "Addition"] And Monoid [<M>, "Multiplication"] {
+    Template Ring [M] Extends {AbelianGroup [<M>, "Addition"], Monoid [<M>, "Multiplication"]} {
         Example Rings <M>
         
         Composition $"$M.Subtraction" (\x, \y) = $"$M.Addition"(\x, $"M.Inverse of Addition"(\y))

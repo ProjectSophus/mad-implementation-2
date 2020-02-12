@@ -14,10 +14,10 @@ Module Algebra.Numbers {
     
     Antiexample C {potato, cucumber}
     Example Z {-1, 0, 1}
-    Example -AntiexampleForSpecialization Q {"1/2", "0.434", "-5.5"}
-    Example -AntiexampleForSpecialization Qbar {"sqrt(2)", "golden ratio", "i", "2i + 3", "2e^(3/4 pi i)"}
-    Example -AntiexampleForSpecialization R {pi, e}
-    Example -AntiexampleForSpecialization C {"i*pi + 3", "e^i"}
+    Example ~AntiexampleForSpecialization Q {"1/2", "0.434", "-5.5"}
+    Example ~AntiexampleForSpecialization Qbar {"sqrt(2)", "golden ratio", "i", "2i + 3", "2e^(3/4 pi i)"}
+    Example ~AntiexampleForSpecialization R {pi, e}
+    Example ~AntiexampleForSpecialization C {"i*pi + 3", "e^i"}
     
     Representation {Decimal, Binary, Hexadecimal} {Z, Q, R}
     Representation {Cartesian, Polar} {Qbar, C}
