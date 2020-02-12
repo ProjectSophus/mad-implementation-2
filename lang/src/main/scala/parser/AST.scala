@@ -27,11 +27,11 @@ object AST {
     case class HasDescription(obj : Seq[Expression], desc : String) extends Declaration
     case class IsMachineTypeOn(machinetype : MachineType, conc : Seq[Expression], machine : Seq[Expression]) extends Declaration
     case class IsMachine(domain : Seq[Expression], codomain : Seq[Expression], machine : Seq[Expression]) extends Declaration
-    case class IsStatement(obj : Expression, str : String) extends Declaration
+    case class IsStatement(obj : Expression, str : Expression) extends Declaration
     case class IsGeneralization(gen : Seq[Expression], spec : Seq[Expression]) extends Declaration
     
     
-    case class CreateTemplate(name : String, params : Seq[String], code : ScopedCode) extends Command
+    case class CreateTemplate(name : String, params : Seq[String], extensions : Seq[(String, Seq[Expression])], code : ScopedCode) extends Command
     
     case class UseTemplate(name : Seq[Expression], params : Seq[Seq[Expression]]) extends Command
     
@@ -54,7 +54,7 @@ object AST {
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
         case IsGeneralization(gen, spec) => for (sgen <- gen; sspec <- spec) yield IsGeneralization(Seq(sgen), Seq(sspec))
-        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable | _ : Module => Seq(command)
+        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable | _ : Module | _ : Using => Seq(command)
         case UseTemplate(name, params) => for {sname <- name; sparams <- params} yield UseTemplate(Seq(sname), Seq(sparams))
     }
     

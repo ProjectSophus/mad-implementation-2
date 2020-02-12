@@ -46,12 +46,12 @@ object Parser extends Parsers {
         case ob ~ param1 ~ param2 => IsMachine(param1, param2, ob)
     }
     
-    def statement : Parser[IsStatement] = Statement ~> expression ~ stringLiteral ^^ {case ob ~ str => IsStatement(ob, str)}
+    def statement : Parser[IsStatement] = Statement ~> expression ~ expression ^^ {case ob ~ str => IsStatement(ob, str)}
     
     def generalization : Parser[IsGeneralization] = Generalization ~> expressions ~ expressions ^^ {case gen ~ spec => IsGeneralization(gen, spec)}
     
-    def template : Parser[CreateTemplate] = (Template ~> stringOrIdentifier ~ templateParamsDec) ~ (GroupOpen ~> code <~ GroupClose) ^^ {
-        case name ~ params ~ code => CreateTemplate(name, params, code)
+    def template : Parser[CreateTemplate] = (Template ~> stringOrIdentifier ~ templateParamsDec ~ (Extends ~> extensions).?) ~ (GroupOpen ~> code <~ GroupClose) ^^ {
+        case name ~ params ~ extensions ~ code => CreateTemplate(name, params, extensions.getOrElse(Seq()), code)
     }
     
     def useTemplate : Parser[AST.UseTemplate] = Token.UseTemplate ~> expressions ~ templateParamsGroup ^^ {case exp ~ params => AST.UseTemplate(exp, params)}
@@ -76,6 +76,11 @@ object Parser extends Parsers {
     
     def templateParamsDec : Parser[Seq[String]] = (ParamOpen ~> rep1sep(stringOrIdentifier, Separator) <~ ParamClose).named("template params declaration")
     
+    def extensions : Parser[Seq[(String, Seq[Expression])]] = extension.map(Seq(_)) | (GroupOpen ~> repsep(extension, Separator) <~ GroupClose)
+    
+    def extension : Parser[(String, Seq[Expression])] = stringOrIdentifier ~ (ParamOpen ~> repsep(expression, Separator) <~ ParamClose) ^^ {
+        case str ~ exprs => (str, exprs)
+    }
     
     def expression : Parser[Expression] = (variableExpression | concreteExpression | interpolationExpression).named("expression")
     

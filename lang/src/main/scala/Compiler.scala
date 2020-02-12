@@ -118,7 +118,7 @@ object Compiler {
                     )
                 }
                 
-                case IsStatement(ExtractExpression(obj), str) => Seq(
+                case IsStatement(ExtractExpression(obj), ExtractExpression(str)) => Seq(
                     Inf.NewObject(obj, okayIfExists = true),
                     Inf.IsStatement(obj, str)
                 )
@@ -156,29 +156,41 @@ object Compiler {
             }
             
             case UseTemplate(Seq(ExtractExpression(name)), Seq(params)) => {
-                val template = scope.templates.find(_.name == name).getOrElse{
-                    throw CompilerException(s"Couldn't find template $name. Did you import it?")
-                }
-                
-                val CreateTemplate(_, paramNames, code) = template
-                
-                if (paramNames.length != params.length) throw CompilerException(s"Amount of parameters in template $name wrong! There are supposed to be ${paramNames.length} but there are ${params.length} supplied!")
-                
-                val resolvedParams = params.map{
-                    case ExtractExpression(param) => param
-                }
-                
-                val newVariables = paramNames zip resolvedParams
-                
-                val newscope = scope.createSubScope()
-                newscope.variables ++= newVariables
-                
-                compileASTtoInformation(code, newscope)
+                useTemplate(name, params)._1
             }
             
             case x => throw CompilerException(s"Don't know what to do with command $x")
         }
         
         info.flatten
+    }
+    
+    private def useTemplate(name : String, params : Seq[Expression])(implicit scope : Scope) : (Seq[Inf], Scope) = {
+        val template = scope.templates.find(_.name == name).getOrElse{
+            throw CompilerException(s"Couldn't find template $name. Did you forget to import it?")
+        }
+        
+        val CreateTemplate(_, paramNames, extensions, code) = template
+        
+        if (paramNames.length != params.length) throw CompilerException(s"Amount of parameters in template $name wrong! There are supposed to be ${paramNames.length} but there are ${params.length} supplied!")
+        
+        val resolvedParams = params.map{
+            case ExtractExpression(param) => param
+        }
+        
+        val newVariables = paramNames zip resolvedParams
+        
+        val newscope = scope.createSubScope()
+        newscope.variables ++= newVariables
+        
+        val info : Seq[Inf] = (for {
+            (name, params) <- extensions
+            (extinfo, extscope) = useTemplate(name, params)(newscope)
+        } yield {
+            newscope.importScope(extscope)
+            extinfo
+        }).flatten
+        
+        (info ++ compileASTtoInformation(code, newscope), newscope)
     }
 }

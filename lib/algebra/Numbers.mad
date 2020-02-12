@@ -19,10 +19,10 @@ Module Algebra.Numbers {
     Example ~AntiexampleForSpecialization R {pi, e}
     Example ~AntiexampleForSpecialization C {"i*pi + 3", "e^i"}
     
-    Representation {Decimal, Binary, Hexadecimal} {Z, Q, R}
-    Representation {Cartesian, Polar} {Qbar, C}
-    Representation "Factorized Form" {Z, Q}
-    Representation "As zero of polynomial in an interval" {Qbar, R, C}
+    Representation of {Z, Q, R} {Decimal, Binary, Hexadecimal}
+    Representation of {Qbar, C} {Cartesian, Polar}
+    Representation of {Z, Q} "Factorized Form"
+    Representation of {Qbar, R, C} "As zero of polynomial in an interval"
     
     Relation on {Z, Q, R} {"Less-than", "Greater-than", "Less-than or equal", "Greater than or equal"}
     
