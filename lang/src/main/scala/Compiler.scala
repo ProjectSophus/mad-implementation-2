@@ -73,8 +73,7 @@ object Compiler {
                 )
                 
                 case IsRelevant(Seq(ExtractExpression(obj)), Seq(ExtractExpression(to))) => Seq(
-                    Inf.ObjectRelevant(to, obj),
-                    Inf.ObjectRelevant(obj, to)
+                    Inf.ObjectRelevant(to, obj)
                 )
                 
                 case HasDescription(Seq(ExtractExpression(obj)), desc) => Seq(
