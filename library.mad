@@ -1,22 +1,96 @@
 
-Module 1t {
+Module Algebra.Structures {
 
-    Concept {Utrykk, Heltall, "Rasjonale tall", "Reelle tall", Polynom, "Rasjonale utrykk", "Analytiske utrykk"}
+    Concept {Magmas, Monoids, Groups, "Abelian Groups", Rings, "Commutative Rings"}
+
+    Template Magma [M, Op] {
+        Example Magmas <M>
+        
+        Operation on <M> <Op>
+    }
+
+    Template Monoid [M, Op] Extends Magma [<M>, <Op>] {
+        Example Monoids <M>
+        
+        Set Mop = $"$M.$Op"
+        
+        Example <M> $"$Mop.Identity Element"
+        
+        Set Asso = $"$Mop.Assosiativity"
+        Statement <Asso> $"$Op(a, $Op(b, c)) = $Op($Op(a, b), c)"
+        Relevant <Asso> {<M>, <Mop>}
+        
+        Set Iden = $"$Mop.Identity Rule"
+        Statement <Iden> $"$Op(Identity, a) = $Op(a, Identity) = a"
+        Relevant <Iden> {<M>, <Mop>}
+    }
+
+    Template Group [M, Op] Extends Monoid [<M>, <Op>] {
+        Example Groups <M>
+        
+        Function on <M> $"Inverse of $Op"
+        Set InvOp = $"$M.Inverse of $Op"
+        
+        Set Inv = $"$Mop.Inverse Rule"
+        Statement <Inv> $"$Op(a, Inverse(a)) = $Op(Inverse(a), a) = Identity"
+        Relevant <Inv> {<M>, <Mop>, <InvOp>}
+    }
     
-    Generalization "Rasjonale tall" Heltall
-    Generalization "Reelle tall" "Rasjonale tall"
-    Generalization Polynom "Reelle tall"
-    Generalization "Rasjonale utrykk" Polynom
-    Generalization "Analytiske utrykk" "Rasjonale utrykk"
-    Generalization Utrykk "Analytiske utrykk"
+    Template AbelianGroup [M, Op] Extends Group [<M>, <Op>] {
+        Example "Abelian Groups" <M>
+        
+        Set Ab = $"$Mop.Commutativity"
+        Statement <Ab> $"$Op(a, b) = $Op(b, a)"
+        Relevant <Ab> {<M>, <Mop>}
+    }
     
-    Antiexample Utrykk {"Reelle tall.Kvadratrot", "Heltall.Mindre-enn"}
-    Example Heltall {-10, 2, 7}
-    Example ~AntiexampleForSpecialization "Rasjonale tall" {"1/2", "3/4", "5.67"}
-    Example ~AntiexampleForSpecialization "Reelle tall" {pi, e, "sqrt(2)"}
-    Example ~AntiexampleForSpecialization Polynom {"x", "x + 1", "x^3 - 2x + pi"}
-    Example ~AntiexampleForSpecialization "Rasjonale utrykk" {"1/x", "1/(x^2 + 3)", "1 + (x + 1)/(x - 1)"}
-    Example ~AntiexampleForSpecialization "Analytiske utrykk" {"log(x)", "e^x", "log(x + e^(4x - sqrt(3)))"}
-    Example ~AntiexampleForSpecialization Utrykk {"|x|", "|x^2 - 1|"}
+    
+    Template Ring [M] Extends {AbelianGroup [<M>, "Addition"], Monoid [<M>, "Multiplication"]} {
+        Example Rings <M>
+        
+        Composition $"$M.Subtraction" (\x, \y) = $"$M.Addition"(\x, $"M.Inverse of Addition"(\y))
+        
+        Set Dist = $"$M.Distributivity"
+        Statement <Dist> $"a * (b + c) = a * b + a * c and (a + b) * c = a * c + b * c"
+        Relevant <Dist> {<M>, $"$M.Addition", $"$M.Multiplication"}
+    }
+    
+    Template CommutativeRing [M] Extends Ring [<M>] {
+        Example "Commutative Rings" <M>
+        
+        Set Com = $"$M.Multiplication.Commutativity"
+        Statement <Com> $"$a * b = b * a"
+        Relevant <Com> {<M>, $"$M.Multiplication"}
+    }
+
+}
+
+Module Algebra.Numbers {
+    
+    Using Algebra.Structures
+    
+    Concept {Z, Q, Qbar, R, C}
+    UseTemplate Ring {[Z], [Q], [Qbar], [R], [C]}
+    
+    Generalization Q Z
+    Generalization Qbar Q
+    Generalization R Q
+    Generalization C R
+    Generalization C Qbar
+    
+    Antiexample C {potato, cucumber}
+    Example Z {-1, 0, 1}
+    Example ~AntiexampleForSpecialization Q {"1/2", "0.434", "-5.5"}
+    Example ~AntiexampleForSpecialization Qbar {"sqrt(2)", "golden ratio", "i", "2i + 3", "2e^(3/4 pi i)"}
+    Example ~AntiexampleForSpecialization R {pi, e}
+    Example ~AntiexampleForSpecialization C {"i*pi + 3", "e^i"}
+    
+    Representation {Decimal, Binary, Hexadecimal} {Z, Q, R}
+    Representation {Cartesian, Polar} {Qbar, C}
+    Representation "Factorized Form" {Z, Q}
+    Representation "As zero of polynomial in an interval" {Qbar, R, C}
+    
+    Relation on {Z, Q, R} {"Less-than", "Greater-than", "Less-than or equal", "Greater than or equal"}
+    
     
 }
