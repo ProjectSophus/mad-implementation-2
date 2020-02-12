@@ -37,6 +37,8 @@ object AST {
     
     case class SetVariable(varname : String, newValue : Expression) extends Command
     
+    case class Using(path : String) extends Command
+    
     sealed abstract class Expression
     case class ConcreteExpression(name : String) extends Expression
     case class VariableExpression(varname : String) extends Expression

@@ -13,15 +13,22 @@ object Compiler {
     
     import collection.mutable.{HashMap, Buffer}
     
-    case class Scope (val variables : HashMap[String, String], val templates : Buffer[CreateTemplate]) {
+    case class Scope (val variables : HashMap[String, String], val templates : Buffer[CreateTemplate], val scopes : HashMap[String, Scope]) {
         def createSubScope() : Scope = Scope(
             HashMap[String, String]() ++= variables,
-            Buffer[CreateTemplate]() ++= templates
+            Buffer[CreateTemplate]() ++= templates,
+            HashMap[String, Scope]() ++= scopes
         )
+        
+        def importScope(scope : Scope) : Unit = {
+            variables ++= scope.variables
+            templates ++= scope.templates
+            scopes ++= scope.scopes
+        }
     }
     
     object Scope {
-        def apply() : Scope = Scope(HashMap[String, String](), Buffer[CreateTemplate]())
+        def apply() : Scope = Scope(HashMap[String, String](), Buffer[CreateTemplate](), HashMap[String, Scope]())
     }
     
     object ExtractExpression {
@@ -126,7 +133,16 @@ object Compiler {
             case Module(name, ast) => {
                 val newscope = scope.createSubScope()
                 
+                scope.scopes.put(name, newscope)
+                
                 compileASTtoInformation(ast, newscope)
+            }
+            
+            case Using(name) => {
+                val oldscope = scope.scopes.getOrElse(name, throw CompilerException(s"Didn't find module $name"))
+                
+                scope.importScope(oldscope)
+                Seq()
             }
             
             case SetVariable(varname, ExtractExpression(exp)) => {
