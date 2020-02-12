@@ -6,5 +6,7 @@ object MADException {
     case class ObjectNameTaken(name : String) extends MADException(f"The name $name is taken!")
     case object ObjectNameEmpty extends MADException(f"The object name is empty!")
     
+    case class ObjectNotFound(obj : String) extends MADException(f"The object $obj was not found!")
+    
     case class RefNotAConcept(concept : String) extends MADException(f"The object $concept is not a concept!")
 }

@@ -1,8 +1,6 @@
 
 Module 1t {
 
-    // Fix error where everything crashes if concept is mistyped
-    
     Concept {Utrykk, Heltall, "Rasjonale tall", "Reelle tall", Polynom, "Rasjonale utrykk", "Analytiske utrykk"}
     
     Generalization "Rasjonale tall" Heltall
