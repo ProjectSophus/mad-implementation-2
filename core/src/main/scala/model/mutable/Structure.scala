@@ -4,16 +4,18 @@ import io.github.ProjectSophus.mad._
 import model._
 import reference._
 
+import collection.mutable.Buffer
+
 abstract sealed class Structure {
     def toStructure : immutable.Structure
 }
 
 object Structure {
     case class Concept (
-        examples : collection.mutable.Buffer[String] = collection.mutable.Buffer(),
-        antiexamples : collection.mutable.Buffer[String] = collection.mutable.Buffer(),
-        generalizations : collection.mutable.Buffer[String] = collection.mutable.Buffer(),
-        specializations : collection.mutable.Buffer[String] = collection.mutable.Buffer()
+        examples : Buffer[String] = Buffer(),
+        antiexamples : Buffer[String] = Buffer(),
+        generalizations : Buffer[String] = Buffer(),
+        specializations : Buffer[String] = Buffer()
     ) extends Structure {
         def toStructure = immutable.Structure.Concept(
             examples.toSeq,
