@@ -11,7 +11,7 @@ import collection.mutable.Buffer
 class BasicMemory extends Memory {
     var model : mutable.Model = mutable.Model()
     val answers : Buffer[(Question, Buffer[Information])] = Buffer()
-    val inferenceEngine : InferenceEngine = new InferenceEngine(this)
+    var inferenceEngine : InferenceEngine = new InferenceEngine(this)
     
     def applyInformationSeq(question : Question, infoseq : Seq[Information]) = {
         def addInfo(info : Information) = InformationAgent(info, this, info => {
@@ -40,6 +40,7 @@ class BasicMemory extends Memory {
     def clear() : Unit = {
         answers.clear()
         model = mutable.Model()
+        inferenceEngine = new InferenceEngine(this)
     }
     
 }

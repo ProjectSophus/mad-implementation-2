@@ -27,10 +27,12 @@ object Lexer extends RegexParsers {
     
     def stringLiteral : Parser[Token] = """"((?:\\"|(?:(?!").))*)"""".r ^^ {case t => StringLiteral(t.drop(1).dropRight(1))}
     
+    def argument : Parser[Token] = """\~[A-Za-z]+""".r ^^ (str => Argument(str.drop(1)))
+    
     def singlelinecomment : Parser[Token] = """\/\/.*\r?\n""".r ^^ (Comment(_))
     def multilinecomment : Parser[Token] = """\/\*((?!\*\/).|\r?\n)*\*\/""".r ^^ (Comment(_))
     
     def newline : Parser[Token] = "\n" ^^^ NewLine
     
-    def total : Parser[Seq[Token]] = positioned(newline | multilinecomment | singlelinecomment | fixedToken | stringLiteral | identifier).*
+    def total : Parser[Seq[Token]] = positioned(newline | multilinecomment | singlelinecomment | fixedToken | stringLiteral | argument | identifier).*
 }

@@ -20,7 +20,7 @@ object AST {
     case class Module(name : String, code : ScopedCode) extends Command
     
     case class IsConcept(obj : Seq[Expression]) extends Declaration
-    case class IsExample(conc : Seq[Expression], obj : Seq[Expression]) extends Declaration
+    case class IsExample(conc : Seq[Expression], obj : Seq[Expression], antiexForSpec : Boolean) extends Declaration
     case class IsAntiexample(conc : Seq[Expression], obj : Seq[Expression]) extends Declaration
     case class IsRepresentation(conc : Seq[Expression], rep : Seq[Expression]) extends Declaration
     case class IsRelevant(obj : Seq[Expression], to : Seq[Expression]) extends Declaration
@@ -44,7 +44,7 @@ object AST {
     
     def expandCommand (command : Command) : Seq[Command] = command match {
         case IsConcept(obj) => for (sobj <- obj) yield IsConcept(Seq(sobj))
-        case IsExample(conc, obj) => for (sconc <- conc; sobj <- obj) yield IsExample(Seq(sconc), Seq(sobj))
+        case IsExample(conc, obj, antiexForSpec) => for (sconc <- conc; sobj <- obj) yield IsExample(Seq(sconc), Seq(sobj), antiexForSpec)
         case IsAntiexample(conc, obj) => for (sconc <- conc; sobj <- obj) yield IsAntiexample(Seq(sconc), Seq(sobj))
         case IsRepresentation(conc, rep) => for (sconc <- conc; srep <- rep) yield IsRepresentation(Seq(sconc), Seq(srep))
         case IsRelevant(obj, to) => for (sobj <- obj; sto <- to) yield IsRelevant(Seq(sobj), Seq(sto))

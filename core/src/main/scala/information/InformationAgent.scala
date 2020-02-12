@@ -40,7 +40,7 @@ object InformationAgent {
                 model.obj(name).structure = Some(Some(Structure.Representation()))
             }
             
-            case IsExampleOf(concept, example) => {
+            case IsExampleOf(concept, example, antiexForSpec) => {
                 getAsConceptSafe(concept, model).examples += example
                 ()
             }

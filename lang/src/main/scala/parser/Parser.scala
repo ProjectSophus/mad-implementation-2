@@ -20,14 +20,19 @@ object Parser extends Parsers {
     }
     
     def ast : Parser[AST] = code
-    def code : Parser[ScopedCode] = NewLine.* ~> (command <~ NewLine.+).* ^^ (ScopedCode(_))
+    def code : Parser[ScopedCode] = (NewLine.* ~> (command <~ NewLine.+).* ^^ (ScopedCode(_))).named("code")
+
+    def command : Parser[Command] = (declaration | template | useTemplate | setVariable | module).named("command")
     
-    def command : Parser[Command] = declaration | template | useTemplate | setVariable | module
-    
-    def declaration : Parser[Declaration] = concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement | generalization
+    def declaration : Parser[Declaration] = (concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement | generalization).named("declaration")
     
     def concept : Parser[IsConcept] = Concept ~> expressions ^^ {case ob => IsConcept(ob)}
-    def example : Parser[IsExample] = Example ~> expressions ~ expressions ^^ {case ob1 ~ ob2 => IsExample(ob1, ob2)}
+    def example : Parser[IsExample] = Example ~> arguments ~ expressions ~ expressions ^^ {
+        case arguments ~ ob1 ~ ob2 => {
+            val bools = processArguments("AntiexampleForSpecialization")(arguments)
+            IsExample(ob1, ob2, bools(0))
+        }
+    }
     def antiexample : Parser[IsAntiexample] = Antiexample ~> expressions ~ expressions ^^ {case ob1 ~ ob2 => IsAntiexample(ob1, ob2)}
     def representation : Parser[IsRepresentation] = Representation ~> expressions ~ expressions ^^ {case ob1 ~ ob2 => IsRepresentation(ob1, ob2)}
     def relevant : Parser[IsRelevant] = Relevant ~> expressions ~ expressions ^^ {case ob1 ~ ob2 =>
@@ -63,26 +68,26 @@ object Parser extends Parsers {
     })
     
     
-    def templateParamsGroup : Parser[Seq[Seq[Expression]]] = templateParams.map(Seq(_)) | GroupOpen ~> repsep(templateParams, Separator) <~ GroupClose
+    def templateParamsGroup : Parser[Seq[Seq[Expression]]] = (templateParams.map(Seq(_)) | GroupOpen ~> repsep(templateParams, Separator) <~ GroupClose).named("group of template params")
     
-    def templateParams : Parser[Seq[Expression]] = ParamOpen ~> repsep(expression, Separator) <~ ParamClose
+    def templateParams : Parser[Seq[Expression]] = (ParamOpen ~> repsep(expression, Separator) <~ ParamClose).named("template params")
     
-    def templateParamsDec : Parser[Seq[String]] = ParamOpen ~> rep1sep(stringOrIdentifier, Separator) <~ ParamClose
-    
-    
-    def expression : Parser[Expression] = variableExpression | concreteExpression | interpolationExpression
-    
-    def concreteExpression : Parser[ConcreteExpression] = stringOrIdentifier.map(ConcreteExpression(_))
-    
-    def variableExpression : Parser[VariableExpression] = VarOpen ~> acceptMatch("variable name", {case Identifier(str) => VariableExpression(str)}) <~ VarClose
-    
-    def interpolationExpression : Parser[InterpolationExpression] = Dollar ~> stringLiteral ^^ {case str => InterpolationExpression(str)}
+    def templateParamsDec : Parser[Seq[String]] = (ParamOpen ~> rep1sep(stringOrIdentifier, Separator) <~ ParamClose).named("template params declaration")
     
     
-    def expressions : Parser[Seq[Expression]] = (expression.map(Seq(_))) | (GroupOpen ~> repsep(expression, Separator) <~ GroupClose)
+    def expression : Parser[Expression] = (variableExpression | concreteExpression | interpolationExpression).named("expression")
+    
+    def concreteExpression : Parser[ConcreteExpression] = stringOrIdentifier.map(ConcreteExpression(_)).named("concrete expression")
+    
+    def variableExpression : Parser[VariableExpression] = (VarOpen ~> acceptMatch("variable name", {case Identifier(str) => VariableExpression(str)}) <~ VarClose).named("variable expression")
+    
+    def interpolationExpression : Parser[InterpolationExpression] = (Dollar ~> stringLiteral ^^ {case str => InterpolationExpression(str)}).named("interpolated expression")
     
     
-    def machineParam : Parser[Seq[Expression]] = (expression.map(Seq(_))) | (TupleOpen ~> repsep(expression, Separator) <~ TupleClose)
+    def expressions : Parser[Seq[Expression]] = ((expression.map(Seq(_))) | (GroupOpen ~> repsep(expression, Separator) <~ GroupClose)).named("expressions")
+    
+    
+    def machineParam : Parser[Seq[Expression]] = ((expression.map(Seq(_))) | (TupleOpen ~> repsep(expression, Separator) <~ TupleClose)).named("machine parameter")
     
     def stringLiteral : Parser[String] = acceptMatch("string literal", {
         case StringLiteral(str) => str
@@ -93,5 +98,24 @@ object Parser extends Parsers {
         case StringLiteral(str) => str
     })
     
+    def arguments : Parser[Seq[String]] = (acceptMatch("argument", {case Argument(arg) => arg}).*).named("arguments")
+    
+    def processArguments(validArguments : String*)(args : Seq[String]) : Seq[Boolean] = {
+        
+        val arguments = collection.mutable.HashSet[String](args : _*)
+        
+        val bools = for {validArg <- validArguments} yield {
+            if (arguments.contains(validArg)) {
+                arguments.remove(validArg)
+                true
+            } else false
+        }
+        
+        if (!arguments.isEmpty) {
+            throw CompilerException(s"Too many arguments! The following arguments were not understood: ${arguments.mkString("(", ", ", ")")}")
+        }
+        
+        bools
+    }
     
 }

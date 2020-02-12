@@ -9,11 +9,15 @@ class GeneralizationInferer(gen : String, spec : String) extends Inferer() {
     
     def infer(info : Information) : Seq[Information] = info match {
         
-        case IsExampleOf(`spec`, obj) => Seq(
+        case IsExampleOf(`spec`, obj, _) => Seq(
             IsExampleOf(gen, obj)
         )
         
         case IsAntiexampleOf(`gen`, obj) => Seq(
+            IsAntiexampleOf(spec, obj)
+        )
+        
+        case IsExampleOf(`gen`, obj, true) => Seq(
             IsAntiexampleOf(spec, obj)
         )
         

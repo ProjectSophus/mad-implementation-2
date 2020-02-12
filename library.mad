@@ -1,5 +1,7 @@
 
 Module 1t {
+
+    // Fix error where everything crashes if concept is mistyped
     
     Concept {Utrykk, Heltall, "Rasjonale tall", "Reelle tall", Polynom, "Rasjonale utrykk", "Analytiske utrykk"}
     
@@ -10,12 +12,13 @@ Module 1t {
     Generalization "Analytiske utrykk" "Rasjonale utrykk"
     Generalization Utrykk "Analytiske utrykk"
     
-    Antiexample Utrykk {"Relle tall.Kvadratrot", "Heltall.Mindre-enn"}
+    Antiexample Utrykk {"Reelle tall.Kvadratrot", "Heltall.Mindre-enn"}
     Example Heltall {-10, 2, 7}
-    /*Example -AntiexampleForSpecialization "Rasjonale tall" {"1/2", "3/4", "5.67"}
-    Example -AntiexampleForSpecialization "Relle tall" {pi, e, "sqrt(2)"}
-    Example -AntiexampleForSpecialization Polynom {"x", "x + 1", "x^3 - 2x + pi"}
-    Example -AntiexampleForSpecialization "Rasjonale utrykk" {"1/x", "1/(x^2 + 3)", "1 + (x + 1)/(x - 1)"}
-    Example -AntiexampleForSpecialization "Analytiske utykk" {"log(x)", "e^x", "log(x + e^(4x - sqrt(3)))"}
-    Example -AntiexampleForSpecialization Utrykk {"|x|", "|x^2 - 1|"}*/
+    Example ~AntiexampleForSpecialization "Rasjonale tall" {"1/2", "3/4", "5.67"}
+    Example ~AntiexampleForSpecialization "Reelle tall" {pi, e, "sqrt(2)"}
+    Example ~AntiexampleForSpecialization Polynom {"x", "x + 1", "x^3 - 2x + pi"}
+    Example ~AntiexampleForSpecialization "Rasjonale utrykk" {"1/x", "1/(x^2 + 3)", "1 + (x + 1)/(x - 1)"}
+    Example ~AntiexampleForSpecialization "Analytiske utrykk" {"log(x)", "e^x", "log(x + e^(4x - sqrt(3)))"}
+    Example ~AntiexampleForSpecialization Utrykk {"|x|", "|x^2 - 1|"}
+    
 }

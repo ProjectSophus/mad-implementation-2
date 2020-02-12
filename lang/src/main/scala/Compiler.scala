@@ -56,9 +56,9 @@ object Compiler {
                     Inf.IsConcept(name)
                 )
                 
-                case IsExample(Seq(ExtractExpression(conc)), Seq(ExtractExpression(obj))) => Seq(
+                case IsExample(Seq(ExtractExpression(conc)), Seq(ExtractExpression(obj)), antiexForSpec) => Seq(
                     Inf.NewObject(obj, okayIfExists = true),
-                    Inf.IsExampleOf(conc, obj)
+                    Inf.IsExampleOf(conc, obj, antiexForSpec = antiexForSpec)
                 )
                 
                 case IsAntiexample(Seq(ExtractExpression(conc)), Seq(ExtractExpression(obj))) => Seq(

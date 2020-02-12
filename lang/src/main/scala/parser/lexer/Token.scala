@@ -54,6 +54,8 @@ object Token {
     
     case class Comment(content : String) extends Token("/* " + content + " */")
     
+    case class Argument(arg : String) extends Token(s"~$arg")
+    
     case class Identifier (val name : String) extends Token(name)
     
     case class StringLiteral (val content : String) extends Token("\"" + content + "\"")
