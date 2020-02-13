@@ -25,6 +25,8 @@ object Lexer extends RegexParsers {
     
     def identifier : Parser[Token] = """[A-Za-z0-9\-_\.]+""".r ^^ (new Identifier(_))
     
+    def multilineString : Parser[Token] = "\"\"\"((?:(?!\"\"\")(?:.|\\n))*)\"\"\"".r ^^ {case t => StringLiteral(t.drop(3).dropRight(3))}
+    
     def stringLiteral : Parser[Token] = """"((?:\\"|(?:(?!").))*)"""".r ^^ {case t => StringLiteral(t.drop(1).dropRight(1))}
     
     def argument : Parser[Token] = """\~[A-Za-z]+""".r ^^ (str => Argument(str.drop(1)))
@@ -34,5 +36,5 @@ object Lexer extends RegexParsers {
     
     def newline : Parser[Token] = "\n" ^^^ NewLine
     
-    def total : Parser[Seq[Token]] = positioned(newline | multilinecomment | singlelinecomment | fixedToken | stringLiteral | argument | identifier).*
+    def total : Parser[Seq[Token]] = positioned(newline | multilinecomment | singlelinecomment | fixedToken | multilineString | stringLiteral | argument | identifier).*
 }

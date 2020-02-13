@@ -92,5 +92,9 @@ Module Algebra.Numbers {
     
     Relation on {Z, Q, R} {"Less-than", "Greater-than", "Less-than or equal", "Greater than or equal"}
     
+    Description Z """
+Z is the ring of the whole numbers.
+It contains both positive and negative numbers.
+The distance between two numbers is given by the absolute value of the difference."""
     
 }
