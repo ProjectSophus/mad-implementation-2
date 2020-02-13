@@ -48,16 +48,44 @@ Module Algebra.Structures {
         Function on <M> $"Inverse of $Op"
         InvOp = $"$M.Inverse of $Op"
         
+        InvText = $"$Op(a, Inverse(a)) = $Op(Inverse(a), a) = Identity"
+        
+        Javascript """
+        
+            if(mad.vars.Op === "Addition"){
+                mad.vars.InvText = "a + (-a) = -a + a = 0"
+            }
+            
+            if(mad.vars.Op === "Multiplication"){
+                mad.vars.InvText = "a * a^(-1) = a^(-1) * a = 1"
+            }
+        
+        """
+        
         Inv = $"$Mop.Inverse Rule"
-        Statement <Inv> $"$Op(a, Inverse(a)) = $Op(Inverse(a), a) = Identity"
+        Statement <Inv> <InvText>
         Relevant <Inv> {<M>, <Mop>, <InvOp>}
     }
     
     Template AbelianGroup [M, Op] Extends Group [<M>, <Op>] {
         Example "Abelian Groups" <M>
         
+        AbText = $"$Op(a, b) = $Op(b, a)"
+        
+        Javascript """
+        
+            if(mad.vars.Op === "Addition"){
+                mad.vars.AbText = "a + b = b + a"
+            }
+            
+            if(mad.vars.Op === "Multiplication"){
+                mad.vars.AbText = "a * b = b * a"
+            }
+        
+        """
+        
         Ab = $"$Mop.Commutativity"
-        Statement <Ab> $"$Op(a, b) = $Op(b, a)"
+        Statement <Ab> <AbText>
         Relevant <Ab> {<M>, <Mop>}
     }
     
