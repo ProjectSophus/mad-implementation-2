@@ -16,12 +16,29 @@ Module Algebra.Structures {
         
         Example <M> $"$Mop.Identity Element"
         
+        AssoText = $"$Op(a, $Op(b, c)) = $Op($Op(a, b), c)"
+        IdenText = $"$Op(Identity, a) = $Op(a, Identity) = a"
+        
+        Javascript """
+            
+            if(mad.vars.Op === "Addition") {
+                mad.vars.AssoText = "a + (b + c) = (a + b) + c"
+                mad.vars.IdenText = "0 + a = a + 0 = a"
+            }
+            
+            if(mad.vars.Op === "Multiplication") {
+                mad.vars.AssoText = "a * (b * c) = (a * b) * c"
+                mad.vars.IdenText = "1 * a = a * 1 = a"
+            }
+            
+        """
+        
         Asso = $"$Mop.Assosiativity"
-        Statement <Asso> $"$Op(a, $Op(b, c)) = $Op($Op(a, b), c)"
+        Statement <Asso> <AssoText>
         Relevant <Asso> {<M>, <Mop>}
         
         Iden = $"$Mop.Identity Rule"
-        Statement <Iden> $"$Op(Identity, a) = $Op(a, Identity) = a"
+        Statement <Iden> <IdenText>
         Relevant <Iden> {<M>, <Mop>}
     }
 

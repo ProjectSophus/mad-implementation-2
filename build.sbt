@@ -12,7 +12,10 @@ lazy val commonSettings = Seq(
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test",
     
     // Scala parser combinators
-    libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6"
+    libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
+    
+    // Json4s
+    libraryDependencies += "org.json4s" %% "json4s-native" % "3.6.0-M1"
     
 )
 

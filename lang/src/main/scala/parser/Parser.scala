@@ -22,7 +22,7 @@ object Parser extends Parsers {
     def ast : Parser[AST] = code
     def code : Parser[ScopedCode] = (NewLine.* ~> (command <~ NewLine.+).* ^^ (ScopedCode(_))).named("code")
 
-    def command : Parser[Command] = (declaration | template | useTemplate | setVariable | module | using).named("command")
+    def command : Parser[Command] = (declaration | template | useTemplate | setVariable | module | using | javascript).named("command")
     
     def declaration : Parser[Declaration] = (concept | example | antiexample | representation | relevant | description | machinetypeon | machine | statement | generalization).named("declaration")
     
@@ -64,6 +64,7 @@ object Parser extends Parsers {
     
     def using : Parser[AST.Using] = Token.Using ~> stringOrIdentifier ^^ (AST.Using(_))
     
+    def javascript : Parser[UseJavascript] = Javascript ~> stringLiteral ^^ (UseJavascript(_))
     
     def machinetype : Parser[MachineType] = acceptMatch("machinetype", {
         case x : MachineTypeKeyword => x.machinetype

@@ -159,6 +159,30 @@ object Compiler {
                 useTemplate(name, params)._1
             }
             
+            case UseJavascript(code) => {
+                import javax.script.ScriptEngineManager
+
+                // TODO: Ensure safe travel of vars, eg. that \n is properlt preserved
+
+                val engine = new ScriptEngineManager().getEngineByMimeType("text/javascript")
+                val vars = scope.variables.toSeq.map {case (key, value) => s""""$key": "$value""""}.mkString("{", ",\n", "}")
+                engine.eval(s"var mad = {vars: $vars};")
+                engine.eval(code)
+                val res = engine.eval("JSON.stringify(mad.vars)")
+                
+                import org.json4s._
+                import org.json4s.native.JsonMethods._
+                
+                val json = parse(res.asInstanceOf[String])
+                
+                val JObject(seq) = json
+                for {
+                    (name, JString(value)) <- seq
+                } scope.variables.put(name, value)
+                
+                Seq()
+            }
+            
             case x => throw CompilerException(s"Don't know what to do with command $x")
         }
         

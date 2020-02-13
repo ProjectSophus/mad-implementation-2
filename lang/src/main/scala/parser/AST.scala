@@ -39,6 +39,8 @@ object AST {
     
     case class Using(path : String) extends Command
     
+    case class UseJavascript(code : String) extends Command
+    
     sealed abstract class Expression
     case class ConcreteExpression(name : String) extends Expression
     case class VariableExpression(varname : String) extends Expression
@@ -54,7 +56,7 @@ object AST {
         case IsMachineTypeOn(machinetype, conc, machine) => for (sconc <- conc; smachine <- machine) yield IsMachineTypeOn(machinetype, Seq(sconc), Seq(smachine))
         case IsMachine(domain, codomain, machine) => for (smachine <- machine) yield IsMachine(domain, codomain, Seq(smachine))
         case IsGeneralization(gen, spec) => for (sgen <- gen; sspec <- spec) yield IsGeneralization(Seq(sgen), Seq(sspec))
-        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable | _ : Module | _ : Using => Seq(command)
+        case _ : IsStatement | _ : CreateTemplate | _ : SetVariable | _ : Module | _ : Using | _ : UseJavascript => Seq(command)
         case UseTemplate(name, params) => for {sname <- name; sparams <- params} yield UseTemplate(Seq(sname), Seq(sparams))
     }
     
