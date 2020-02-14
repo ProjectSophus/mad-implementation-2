@@ -96,7 +96,7 @@ Module Algebra.Structures {
         //Composition $"$M.Subtraction" (\x, \y) = $"$M.Addition"(\x, $"M.Inverse of Addition"(\y))
         
         Dist = $"$M.Distributivity"
-        Statement <Dist> $"a * (b + c) = a * b + a * c and (a + b) * c = a * c + b * c"
+        Statement <Dist> "a * (b + c) = a * b + a * c and (a + b) * c = a * c + b * c"
         Relevant <Dist> {<M>, $"$M.Addition", $"$M.Multiplication"}
     }
     
@@ -104,7 +104,7 @@ Module Algebra.Structures {
         Example "Commutative Rings" <M>
         
         Com = $"$M.Multiplication.Commutativity"
-        Statement <Com> $"$a * b = b * a"
+        Statement <Com> "a * b = b * a"
         Relevant <Com> {<M>, $"$M.Multiplication"}
     }
 
@@ -115,7 +115,7 @@ Module Algebra.Numbers {
     Using Algebra.Structures
     
     Concept {Z, Q, Qbar, R, C}
-    UseTemplate Ring {[Z], [Q], [Qbar], [R], [C]}
+    UseTemplate CommutativeRing {[Z], [Q], [Qbar], [R], [C]}
     
     Generalization Q Z
     Generalization Qbar Q
