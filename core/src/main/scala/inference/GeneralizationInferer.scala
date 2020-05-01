@@ -10,7 +10,7 @@ class GeneralizationInferer(gen : String, spec : String) extends Inferer() {
     def infer(info : Information) : Seq[Information] = info match {
         
         case IsExampleOf(`spec`, obj, _) => Seq(
-            IsExampleOf(gen, obj)
+            IsExampleOf(gen, obj) // Should we pass along boolean
         )
         
         case IsAntiexampleOf(`gen`, obj) => Seq(
